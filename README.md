@@ -25,6 +25,8 @@ If the log lists films "Not found on TMDB", add their TMDB number to `tmdb-ids.j
 - To change which services count as yours, edit `OUR_SERVICES` near the top of `app.js`.
 
 ## How picks work
+- Moods can be combined (Funny and Feel good finds films that are both). "Narrow it down" filters by release date and minimum rating.
+- "We've seen it" hides a film on this phone for good (with Undo). "Not tonight" hides it on this phone for 12 hours. "Show me 5 others" pages through everything that fits without repeats.
 - As well as the hand-picked films in `catalogue.json`, the nightly refresh adds every well-known film currently on your services (up to 2,500, most popular first). Their moods come from TMDB genres and keywords, and their watch-outs aren't hand-checked, so Gentle mode only shows the U and PG ones. Settings are at the top of `refresh.py`.
 - Who's watching hides films any of them has seen. With no kids selected, grown-up films rise to the top and kids' films sink.
 - Gentle mode comes on whenever Kid 2 is selected and goes off otherwise; you can still flip it by hand.

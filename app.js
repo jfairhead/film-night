@@ -9,6 +9,10 @@ const MOODS = [
 const FLAG_TEXT = { loud: "Loud scenes", flashing: "Flashing lights", scary: "Scary moments", violence: "Some violence",
   sad: "Sad moments", language: "Strong language", subtitles: "Subtitles" };
 const PER_PAGE = 5;
+const THIS_YEAR = new Date().getFullYear();
+const ERAS = [["any", "Any time"], ["new", "New releases"], ["2010", "2010 on"], ["2000", "2000 on"], ["old", "Before 2000"]];
+const RATINGS = [[0, "Any rating"], [6, "6+"], [7, "7+"], [8, "8+"]];
+const SKIP_HOURS = 12;
 // Services the household can watch without paying extra
 const OUR_SERVICES = ["Netflix", "Prime Video", "Disney+", "BBC iPlayer", "ITVX", "Channel 4", "My5"];
 
@@ -30,12 +34,26 @@ const state = {
   who: new Set(store.get("who", ["Mum", "Dad"])),
   gentle: false, // set from who's watching on load
   ours: store.get("ours", true),
-  mood: null,
+  moods: new Set(),
+  era: store.get("era", "any"),
+  minRating: store.get("minRating", 0),
   like: null,
   page: 0,
   seed: Math.floor(Math.random() * 1e9)
 };
 let localSeen = store.get("seenLocal", {}); // id -> {who:[...], date:"YYYY-MM-DD"}
+// "Not tonight": hidden on this phone for a few hours
+let skipped = Object.fromEntries(Object.entries(store.get("skipped", {})).filter(([, t]) => t > Date.now()));
+const rating = (f) => f.ir || f.tr || 0;
+function eraOk(y) {
+  switch (state.era) {
+    case "new": return y >= THIS_YEAR - 1;
+    case "2010": return y >= 2010;
+    case "2000": return y >= 2000;
+    case "old": return y < 2000;
+    default: return true;
+  }
+}
 
 const norm = (s) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
 function rand(seed, s) { let h = seed ^ 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return (h >>> 0) / 4294967296; }
@@ -58,6 +76,9 @@ function allowed(f) {
   if (state.gentle && f.auto && !["U", "PG"].includes(f.c)) return false;
   if (state.ours && enriched() && !onOurs(f)) return false;
   if ((f.c === "18" || f.c === "?") && kidsIn()) return false;
+  if (skipped[f.id]) return false;
+  if (!eraOk(f.y)) return false;
+  if (state.minRating && rating(f) < state.minRating) return false;
   return !hiddenAsSeen(f.id);
 }
 const stem = (t) => t.replace(/s$/, "");
@@ -71,7 +92,8 @@ function similarity(a, b) {
 function ranked() {
   const liked = state.like ? byId.get(state.like) : null;
   let list = DATA.films.filter((f) => f.id !== state.like && allowed(f));
-  if (state.mood) list = list.filter((f) => f.m.includes(state.mood));
+  // Every chosen mood must match: Funny + Feel good means both
+  if (state.moods.size) list = list.filter((f) => [...state.moods].every((m) => f.m.includes(m)));
   const scored = list.map((f) => {
     let score = 0, why = null;
     if (liked) {
@@ -80,7 +102,7 @@ function ranked() {
       if (s.tags.length) why = `Like ${liked.t}: ${s.tags.slice(0, 3).map((t) => t.replace(/-/g, " ")).join(", ")}`;
       else if (score) why = `Same kind of mood as ${liked.t}`;
     }
-    return { f, score, why, key: score + (f.ir || f.tr || 6.5) * 0.25 + (f.auto ? 0 : 0.6) + (kidsIn() ? 0 : AUDIENCE_WEIGHT[f.a] || 0) + rand(state.seed, f.id) * 1.2 };
+    return { f, score, why, key: score + (rating(f) || 6.5) * 0.25 + (f.auto ? 0 : 0.6) + (kidsIn() ? 0 : AUDIENCE_WEIGHT[f.a] || 0) + rand(state.seed, f.id) * 1.2 };
   }).filter((x) => !liked || x.score > 0);
   scored.sort((a, b) => b.key - a.key);
   return scored;
@@ -123,7 +145,11 @@ function render() {
   $("who").innerHTML = VIEWERS.map((v) =>
     `<button class="chip" type="button" data-who="${v}" aria-pressed="${state.who.has(v)}">${v}</button>`).join("");
   $("moods").innerHTML = MOODS.map(([k, l]) =>
-    `<button class="chip" type="button" data-mood="${k}" aria-pressed="${state.mood === k}">${l}</button>`).join("");
+    `<button class="chip" type="button" data-mood="${k}" aria-pressed="${state.moods.has(k)}">${l}</button>`).join("");
+  $("eras").innerHTML = ERAS.map(([k, l]) =>
+    `<button class="chip" type="button" data-era="${k}" aria-pressed="${state.era === k}">${l}</button>`).join("");
+  $("ratings").innerHTML = RATINGS.map(([k, l]) =>
+    `<button class="chip" type="button" data-rating="${k}" aria-pressed="${state.minRating === k}">${l}</button>`).join("");
   $("gentle").checked = state.gentle;
   $("ours").checked = state.ours;
   $("ours-row").hidden = !enriched();
@@ -141,16 +167,19 @@ function render() {
   const pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
   const page = state.page % pages;
   const shown = list.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
-  $("shuffle").hidden = list.length <= PER_PAGE && !(!state.mood && !state.like);
+  const more = list.length > PER_PAGE;
+  $("shuffle").hidden = !more; $("more").hidden = !more;
+  const n = Object.keys(skipped).length;
+  $("skipped-row").hidden = !n;
+  $("skipped-count").textContent = `${n} ${n === 1 ? "film" : "films"} hidden for tonight.`;
   if (!shown.length) {
     $("summary").textContent = "";
-    res.innerHTML = `<div class="empty">Nothing left that fits. Try another mood, turn off Gentle mode, or ask Claude to add more films.</div>`;
+    res.innerHTML = `<div class="empty">Nothing fits all of that. Try fewer moods, a wider date or rating, or turn off Gentle mode.</div>`;
     return;
   }
-  $("summary").textContent = `${shown.length} ${shown.length === 1 ? "pick" : "picks"} for ${whoText()}`;
+  $("summary").textContent = `${list.length} ${list.length === 1 ? "film fits" : "films fit"} ${whoText()}. Showing ${page * PER_PAGE + 1} to ${page * PER_PAGE + shown.length}.`;
   res.innerHTML = shown.map(({ f, why }) => {
     const warn = warnLine(f);
-    const mine = localSeen[f.id];
     return `<article class="ticket">
       <div class="body">
         <h3>${esc(f.t)}</h3>
@@ -161,7 +190,8 @@ function render() {
         <div class="actions">
           <a class="btn" href="${imdbUrl(f)}" target="_blank" rel="noopener">IMDb</a>
           <a class="btn" href="${whereUrl(f)}" target="_blank" rel="noopener">Where to watch</a>
-          <button class="btn ${mine ? "done" : ""}" type="button" data-seen="${f.id}" aria-pressed="${!!mine}">${mine ? "Seen (undo)" : "We've seen it"}</button>
+          <button class="btn" type="button" data-seen="${f.id}">We've seen it</button>
+          <button class="btn" type="button" data-skip="${f.id}">Not tonight</button>
         </div>
       </div>
       <div class="stub" aria-label="Certificate ${f.c}, ${f.r} minutes">
@@ -169,13 +199,16 @@ function render() {
       </div>
     </article>`;
   }).join("");
-  const n = Object.keys(localSeen).length;
-  $("local-count").textContent = n ? `${n} ${n === 1 ? "film" : "films"} marked as seen on this phone.` : "Films you mark as seen are saved on this phone.";
+  const ls = Object.keys(localSeen).length;
+  $("local-count").textContent = ls ? `${ls} ${ls === 1 ? "film" : "films"} marked as seen on this phone. They stay hidden until you clear them.` : "Films you mark as seen are saved on this phone and stay hidden.";
 }
 
-function toast(msg) {
-  const t = $("toast"); t.textContent = msg; t.classList.add("show");
-  clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("show"), 2200);
+function toast(msg, undo) {
+  const t = $("toast");
+  t.innerHTML = esc(msg) + (undo ? ` <button type="button" id="undo">Undo</button>` : "");
+  t.classList.add("show"); t.classList.toggle("actionable", !!undo);
+  if (undo) $("undo").onclick = () => { undo(); t.classList.remove("show"); };
+  clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("show"), undo ? 5000 : 2200);
 }
 
 function wire() {
@@ -187,24 +220,40 @@ function wire() {
   });
   $("moods").addEventListener("click", (e) => {
     const b = e.target.closest("[data-mood]"); if (!b) return;
-    state.mood = state.mood === b.dataset.mood ? null : b.dataset.mood; state.page = 0; render();
+    const m = b.dataset.mood; state.moods.has(m) ? state.moods.delete(m) : state.moods.add(m); state.page = 0; render();
   });
+  $("eras").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-era]"); if (!b) return;
+    state.era = b.dataset.era; store.set("era", state.era); state.page = 0; render();
+  });
+  $("ratings").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-rating]"); if (!b) return;
+    state.minRating = Number(b.dataset.rating); store.set("minRating", state.minRating); state.page = 0; render();
+  });
+  $("unskip").addEventListener("click", () => { skipped = {}; store.set("skipped", skipped); render(); toast("Showing them again"); });
   $("ours").addEventListener("change", (e) => { state.ours = e.target.checked; store.set("ours", state.ours); state.page = 0; render(); });
   $("gentle").addEventListener("change", (e) => { state.gentle = e.target.checked; state.page = 0; render(); });
-  $("shuffle").addEventListener("click", () => {
-    if (!state.mood && !state.like) state.seed = Math.floor(Math.random() * 1e9); else state.page++;
-    render(); $("results").scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  const others = () => {
+    const total = ranked().length;
+    state.page++;
+    if (state.page * PER_PAGE >= total) { state.page = 0; toast("That's everything that fits. Back to the start."); }
+    render(); $("summary").scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  $("shuffle").addEventListener("click", others);
+  $("more").addEventListener("click", others);
   $("results").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-seen]"); if (!b) return;
-    const id = b.dataset.seen;
-    if (localSeen[id]) { delete localSeen[id]; b.classList.remove("done"); b.textContent = "We've seen it"; b.setAttribute("aria-pressed", "false"); toast("Removed from seen"); }
-    else {
+    const seen = e.target.closest("[data-seen]"), skip = e.target.closest("[data-skip]");
+    if (seen) {
+      const id = seen.dataset.seen;
       localSeen[id] = { who: [...state.who], date: new Date().toISOString().slice(0, 10) };
-      b.classList.add("done"); b.textContent = "Seen (undo)"; b.setAttribute("aria-pressed", "true");
-      toast(`Marked as seen by ${whoText()}`);
+      store.set("seenLocal", localSeen); render();
+      toast(`Marked as seen by ${whoText()}`, () => { delete localSeen[id]; store.set("seenLocal", localSeen); render(); });
+    } else if (skip) {
+      const id = skip.dataset.skip;
+      skipped[id] = Date.now() + SKIP_HOURS * 3600e3;
+      store.set("skipped", skipped); render();
+      toast("Hidden for tonight", () => { delete skipped[id]; store.set("skipped", skipped); render(); });
     }
-    store.set("seenLocal", localSeen);
   });
 
   const input = $("like"), sug = $("suggest");

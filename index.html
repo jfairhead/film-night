@@ -26,6 +26,7 @@
   :root{ --bg:#DCE2F1; --raise:#EEF1F9; --line:#B9C1DB; --text:#1B1F3A; --muted:#4E5577; --pop:#F5C542; }
 }
 *,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.45;
   -webkit-font-smoothing:antialiased}
@@ -84,6 +85,8 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--pop);color:var(--popInk);
   font-weight:700;padding:10px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.show{opacity:1}
+.toast.actionable{pointer-events:auto;display:flex;align-items:center;gap:12px}
+.toast button{font:inherit;font-weight:800;background:var(--popInk);color:var(--pop);border:0;border-radius:8px;padding:8px 12px;min-height:40px;cursor:pointer}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
@@ -107,6 +110,7 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
   <section aria-labelledby="mood-h">
     <h2 id="mood-h">In the mood for…</h2>
     <div class="chips" id="moods"></div>
+    <p class="hint" style="margin-top:6px">Pick more than one to find films that are all of them.</p>
   </section>
 
   <section aria-labelledby="like-h">
@@ -118,12 +122,24 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
     <p class="hint" id="like-hint" style="margin-top:6px"></p>
   </section>
 
+  <section aria-labelledby="narrow-h">
+    <h2 id="narrow-h">Narrow it down</h2>
+    <div class="chips" id="eras"></div>
+    <div class="chips" id="ratings" style="margin-top:8px"></div>
+    <p class="hint" style="margin-top:6px">Rating is IMDb where known, otherwise TMDB.</p>
+  </section>
+
   <section aria-live="polite">
     <div class="results-head">
       <p id="summary"></p>
-      <button class="btn" id="shuffle" type="button">Shuffle</button>
+      <button class="btn" id="shuffle" type="button">Show others</button>
     </div>
     <div class="tickets" id="results"></div>
+    <button class="btn primary" id="more" type="button" style="width:100%;margin-top:16px">Show me 5 others</button>
+    <div class="row" id="skipped-row" hidden>
+      <p class="hint" id="skipped-count"></p>
+      <button class="btn" id="unskip" type="button">Show them again</button>
+    </div>
   </section>
 
   <footer>

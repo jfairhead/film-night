@@ -21,7 +21,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-mitchells-vs-the-machines-2021",
@@ -45,7 +46,8 @@
     "loud",
     "flashing"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "hidden-figures-2016",
@@ -66,7 +68,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-wild-robot-2024",
@@ -89,7 +92,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "wall-e-2008",
@@ -110,7 +114,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "due-date-2010",
@@ -130,7 +135,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "big-hero-6-2014",
@@ -154,7 +160,8 @@
     "loud",
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "soul-2020",
@@ -174,7 +181,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "coco-2017",
@@ -197,7 +205,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "the-sandlot-1993",
@@ -218,7 +227,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-princess-bride-1987",
@@ -238,7 +248,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "monsters-inc-2001",
@@ -257,7 +268,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "the-boy-who-harnessed-the-wind-2019",
@@ -280,7 +292,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "glass-onion-a-knives-out-mystery-2022",
@@ -303,7 +316,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "hunt-for-the-wilderpeople-2016",
@@ -326,7 +340,8 @@
     "flashing",
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-martian-2015",
@@ -349,7 +364,8 @@
    "f": [
     "loud"
    ],
-   "n": "One wince-making self-surgery scene"
+   "n": "One wince-making self-surgery scene",
+   "a": "family"
   },
   {
    "id": "paddington-2014",
@@ -369,7 +385,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "paddington-2-2017",
@@ -390,7 +407,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "paddington-in-peru-2024",
@@ -412,7 +430,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "school-of-rock-2003",
@@ -433,7 +452,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "chef-2014",
@@ -454,7 +474,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "the-intern-2015",
@@ -473,7 +494,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "yesterday-2019",
@@ -495,7 +517,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "sing-street-2016",
@@ -519,7 +542,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-secret-life-of-walter-mitty-2013",
@@ -539,7 +563,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "jumanji-welcome-to-the-jungle-2017",
@@ -562,7 +587,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "free-guy-2021",
@@ -585,7 +611,8 @@
     "flashing",
     "violence"
    ],
-   "n": "Constant cartoonish game violence"
+   "n": "Constant cartoonish game violence",
+   "a": "family"
   },
   {
    "id": "night-at-the-museum-2006",
@@ -604,7 +631,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "elf-2003",
@@ -623,7 +651,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "groundhog-day-1993",
@@ -642,7 +671,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "back-to-the-future-1985",
@@ -665,7 +695,8 @@
    "f": [
     "violence"
    ],
-   "n": "A brief shooting"
+   "n": "A brief shooting",
+   "a": "family"
   },
   {
    "id": "ferris-bueller-s-day-off-1986",
@@ -686,7 +717,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "the-truman-show-1998",
@@ -706,7 +738,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "big-1988",
@@ -725,7 +758,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-terminal-2004",
@@ -744,7 +778,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "home-alone-1990",
@@ -762,7 +797,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-parent-trap-1998",
@@ -782,7 +818,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "freaky-friday-2003",
@@ -801,7 +838,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "mrs-doubtfire-1993",
@@ -820,7 +858,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "galaxy-quest-1999",
@@ -840,7 +879,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "men-in-black-1997",
@@ -859,7 +899,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": "Slimy alien gross-out moments"
+   "n": "Slimy alien gross-out moments",
+   "a": "family"
   },
   {
    "id": "ghostbusters-1984",
@@ -879,7 +920,8 @@
    "f": [
     "scary"
    ],
-   "n": "Mild ghostly frights"
+   "n": "Mild ghostly frights",
+   "a": "family"
   },
   {
    "id": "bend-it-like-beckham-2002",
@@ -900,7 +942,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "cool-runnings-1993",
@@ -921,7 +964,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "eddie-the-eagle-2016",
@@ -942,7 +986,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "little-miss-sunshine-2006",
@@ -963,7 +1008,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "the-edge-of-seventeen-2016",
@@ -984,7 +1030,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "lady-bird-2017",
@@ -1005,7 +1052,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "crazy-rich-asians-2018",
@@ -1025,7 +1073,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "legally-blonde-2001",
@@ -1044,7 +1093,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-devil-wears-prada-2006",
@@ -1062,7 +1112,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "clueless-1995",
@@ -1080,7 +1131,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "mean-girls-2004",
@@ -1097,7 +1149,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "notting-hill-1999",
@@ -1118,7 +1171,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "about-time-2013",
@@ -1141,7 +1195,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "jojo-rabbit-2019",
@@ -1163,7 +1218,8 @@
     "sad",
     "violence"
    ],
-   "n": "Dark turns late on"
+   "n": "Dark turns late on",
+   "a": "family"
   },
   {
    "id": "game-night-2018",
@@ -1186,7 +1242,8 @@
     "violence",
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "the-lost-city-2022",
@@ -1207,7 +1264,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "murder-mystery-2019",
@@ -1228,7 +1286,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "catch-me-if-you-can-2002",
@@ -1249,7 +1308,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-duke-2020",
@@ -1268,7 +1328,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "fisherman-s-friends-2019",
@@ -1292,7 +1353,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "dream-horse-2020",
@@ -1313,7 +1375,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-peanut-butter-falcon-2019",
@@ -1336,7 +1399,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "wonder-2017",
@@ -1355,7 +1419,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "gifted-2017",
@@ -1375,7 +1440,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "coda-2021",
@@ -1398,7 +1464,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-intouchables-2011",
@@ -1421,7 +1488,8 @@
     "language",
     "subtitles"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
   },
   {
    "id": "zootropolis-2016",
@@ -1442,7 +1510,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "ratatouille-2007",
@@ -1462,7 +1531,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "up-2009",
@@ -1485,7 +1555,8 @@
    "f": [
     "sad"
    ],
-   "n": "A famously sad opening"
+   "n": "A famously sad opening",
+   "a": "kids"
   },
   {
    "id": "inside-out-2015",
@@ -1506,7 +1577,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "inside-out-2-2024",
@@ -1526,7 +1598,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "toy-story-1995",
@@ -1544,7 +1617,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "toy-story-3-2010",
@@ -1566,7 +1640,8 @@
     "sad",
     "scary"
    ],
-   "n": "A tense furnace scene"
+   "n": "A tense furnace scene",
+   "a": "kids"
   },
   {
    "id": "finding-nemo-2003",
@@ -1586,7 +1661,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "moana-2016",
@@ -1610,7 +1686,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "encanto-2021",
@@ -1630,7 +1707,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "luca-2021",
@@ -1650,7 +1728,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "turning-red-2022",
@@ -1672,7 +1751,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "elemental-2023",
@@ -1692,7 +1772,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "klaus-2019",
@@ -1712,7 +1793,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "spider-man-into-the-spider-verse-2018",
@@ -1734,7 +1816,8 @@
     "loud",
     "flashing"
    ],
-   "n": "Very busy, strobing visuals"
+   "n": "Very busy, strobing visuals",
+   "a": "kids"
   },
   {
    "id": "spider-man-across-the-spider-verse-2023",
@@ -1756,7 +1839,8 @@
     "loud",
     "flashing"
    ],
-   "n": "Very busy, strobing visuals"
+   "n": "Very busy, strobing visuals",
+   "a": "kids"
   },
   {
    "id": "how-to-train-your-dragon-2010",
@@ -1777,7 +1861,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "kung-fu-panda-2008",
@@ -1796,7 +1881,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "shrek-2001",
@@ -1814,7 +1900,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "the-incredibles-2004",
@@ -1836,7 +1923,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "wallace-gromit-the-curse-of-the-were-rabbit-2005",
@@ -1855,7 +1943,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "wallace-gromit-vengeance-most-fowl-2024",
@@ -1875,7 +1964,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "chicken-run-2000",
@@ -1894,7 +1984,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "chicken-run-dawn-of-the-nugget-2023",
@@ -1915,7 +2006,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "fantastic-mr-fox-2009",
@@ -1935,7 +2027,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "isle-of-dogs-2018",
@@ -1954,7 +2047,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "the-lego-movie-2014",
@@ -1974,7 +2068,8 @@
    "f": [
     "flashing"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "robot-dreams-2023",
@@ -1995,7 +2090,8 @@
    "f": [
     "sad"
    ],
-   "n": "No dialogue at all"
+   "n": "No dialogue at all",
+   "a": "kids"
   },
   {
    "id": "the-bad-guys-2022",
@@ -2013,7 +2109,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "puss-in-boots-the-last-wish-2022",
@@ -2035,7 +2132,8 @@
    "f": [
     "scary"
    ],
-   "n": "A menacing villain"
+   "n": "A menacing villain",
+   "a": "kids"
   },
   {
    "id": "nimona-2023",
@@ -2056,7 +2154,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "spirited-away-2001",
@@ -2077,7 +2176,8 @@
    "f": [
     "scary"
    ],
-   "n": "Some eerie creatures"
+   "n": "Some eerie creatures",
+   "a": "kids"
   },
   {
    "id": "my-neighbour-totoro-1988",
@@ -2097,7 +2197,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "kiki-s-delivery-service-1989",
@@ -2117,7 +2218,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "the-iron-giant-1999",
@@ -2138,7 +2240,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "onward-2020",
@@ -2161,7 +2264,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "leo-2023",
@@ -2180,7 +2284,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "migration-2023",
@@ -2199,7 +2304,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "the-super-mario-bros-movie-2023",
@@ -2220,7 +2326,8 @@
     "loud",
     "flashing"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "tangled-2010",
@@ -2239,7 +2346,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "ron-s-gone-wrong-2021",
@@ -2262,7 +2370,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "kids"
   },
   {
    "id": "enola-holmes-2020",
@@ -2284,7 +2393,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "enola-holmes-2-2022",
@@ -2306,7 +2416,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "knives-out-2019",
@@ -2328,7 +2439,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "see-how-they-run-2022",
@@ -2351,7 +2463,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "murder-on-the-orient-express-2017",
@@ -2372,7 +2485,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "clue-1985",
@@ -2390,7 +2504,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-sting-1973",
@@ -2409,7 +2524,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "now-you-see-me-2013",
@@ -2428,7 +2544,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "ocean-s-eleven-2001",
@@ -2447,7 +2564,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-italian-job-1969",
@@ -2466,7 +2584,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "sherlock-holmes-2009",
@@ -2489,7 +2608,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "rear-window-1954",
@@ -2507,7 +2627,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "north-by-northwest-1959",
@@ -2525,7 +2646,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "hugo-2011",
@@ -2545,7 +2667,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "national-treasure-2004",
@@ -2564,7 +2687,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "holes-2003",
@@ -2584,7 +2708,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-grand-budapest-hotel-2014",
@@ -2606,7 +2731,8 @@
     "violence",
     "language"
    ],
-   "n": "One brief grisly moment"
+   "n": "One brief grisly moment",
+   "a": "adults"
   },
   {
    "id": "operation-mincemeat-2021",
@@ -2625,7 +2751,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-imitation-game-2014",
@@ -2647,7 +2774,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "inception-2010",
@@ -2669,7 +2797,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "indiana-jones-and-the-last-crusade-1989",
@@ -2690,7 +2819,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "jurassic-park-1993",
@@ -2711,7 +2841,8 @@
     "scary",
     "loud"
    ],
-   "n": "Genuinely scary dinosaur attacks"
+   "n": "Genuinely scary dinosaur attacks",
+   "a": "family"
   },
   {
    "id": "e-t-the-extra-terrestrial-1982",
@@ -2732,7 +2863,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-goonies-1985",
@@ -2753,7 +2885,8 @@
    "f": [
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "stardust-2007",
@@ -2774,7 +2907,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "pirates-of-the-caribbean-the-curse-of-the-black-pearl-2003",
@@ -2797,7 +2931,8 @@
     "violence",
     "loud"
    ],
-   "n": "Skeleton pirates"
+   "n": "Skeleton pirates",
+   "a": "family"
   },
   {
    "id": "master-and-commander-the-far-side-of-the-world-2003",
@@ -2820,7 +2955,8 @@
     "violence",
     "loud"
    ],
-   "n": "Cannon battles, a shipboard operation"
+   "n": "Cannon battles, a shipboard operation",
+   "a": "family"
   },
   {
    "id": "life-of-pi-2012",
@@ -2842,7 +2978,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "kon-tiki-2012",
@@ -2861,7 +2998,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "jungle-cruise-2021",
@@ -2882,7 +3020,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-mummy-1999",
@@ -2903,7 +3042,8 @@
     "scary",
     "violence"
    ],
-   "n": "Creepy scarab and mummy scenes"
+   "n": "Creepy scarab and mummy scenes",
+   "a": "family"
   },
   {
    "id": "harry-potter-and-the-philosopher-s-stone-2001",
@@ -2922,7 +3062,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-chronicles-of-narnia-the-lion-the-witch-and-the-wardrobe-2005",
@@ -2942,7 +3083,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-bfg-2016",
@@ -2961,7 +3103,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "matilda-1996",
@@ -2980,7 +3123,8 @@
    ],
    "i": 2,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "matilda-the-musical-2022",
@@ -3003,7 +3147,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "charlie-and-the-chocolate-factory-2005",
@@ -3023,7 +3168,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "apollo-13-1995",
@@ -3045,7 +3191,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "october-sky-1999",
@@ -3065,7 +3212,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "interstellar-2014",
@@ -3087,7 +3235,8 @@
     "loud",
     "sad"
    ],
-   "n": "Very long, very loud"
+   "n": "Very long, very loud",
+   "a": "family"
   },
   {
    "id": "arrival-2016",
@@ -3108,7 +3257,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "top-gun-maverick-2022",
@@ -3128,7 +3278,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "ford-v-ferrari-2019",
@@ -3150,7 +3301,8 @@
    "f": [
     "loud"
    ],
-   "n": "One serious crash"
+   "n": "One serious crash",
+   "a": "family"
   },
   {
    "id": "real-steel-2011",
@@ -3172,7 +3324,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "ready-player-one-2018",
@@ -3194,7 +3347,8 @@
     "loud",
     "flashing"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "bumblebee-2018",
@@ -3216,7 +3370,8 @@
    "f": [
     "loud"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "remember-the-titans-2000",
@@ -3236,7 +3391,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "chariots-of-fire-1981",
@@ -3255,7 +3411,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "moneyball-2011",
@@ -3274,7 +3431,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "rocky-1976",
@@ -3294,7 +3452,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-karate-kid-1984",
@@ -3315,7 +3474,8 @@
    "f": [
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-dig-2021",
@@ -3336,7 +3496,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "cast-away-2000",
@@ -3357,7 +3518,8 @@
    "f": [
     "sad"
    ],
-   "n": "A painful tooth scene"
+   "n": "A painful tooth scene",
+   "a": "family"
   },
   {
    "id": "forrest-gump-1994",
@@ -3378,7 +3540,8 @@
     "sad",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "dead-poets-society-1989",
@@ -3397,7 +3560,8 @@
    "f": [
     "sad"
    ],
-   "n": "A character's death"
+   "n": "A character's death",
+   "a": "family"
   },
   {
    "id": "little-women-2019",
@@ -3417,7 +3581,8 @@
    "f": [
     "sad"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "pride-prejudice-2005",
@@ -3436,7 +3601,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "emma-2020",
@@ -3454,7 +3620,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "hairspray-2007",
@@ -3473,7 +3640,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "mamma-mia-2008",
@@ -3494,7 +3662,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-greatest-showman-2017",
@@ -3512,7 +3681,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "wicked-2024",
@@ -3531,7 +3701,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": "Long"
+   "n": "Long",
+   "a": "family"
   },
   {
    "id": "singin-in-the-rain-1952",
@@ -3550,7 +3721,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "mary-poppins-1964",
@@ -3569,7 +3741,8 @@
    ],
    "i": 1,
    "f": [],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "the-wizard-of-oz-1939",
@@ -3589,7 +3762,8 @@
    "f": [
     "scary"
    ],
-   "n": "The witch can frighten"
+   "n": "The witch can frighten",
+   "a": "family"
   },
   {
    "id": "chitty-chitty-bang-bang-1968",
@@ -3609,7 +3783,8 @@
    "f": [
     "scary"
    ],
-   "n": "The Child Catcher"
+   "n": "The Child Catcher",
+   "a": "family"
   },
   {
    "id": "gravity-2013",
@@ -3629,7 +3804,8 @@
    "f": [
     "loud"
    ],
-   "n": "Relentless peril"
+   "n": "Relentless peril",
+   "a": "family"
   },
   {
    "id": "dunkirk-2017",
@@ -3651,7 +3827,8 @@
     "loud",
     "violence"
    ],
-   "n": "Intense and very loud"
+   "n": "Intense and very loud",
+   "a": "family"
   },
   {
    "id": "dune-2021",
@@ -3672,7 +3849,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "edge-of-tomorrow-2014",
@@ -3694,7 +3872,8 @@
     "loud",
     "violence"
    ],
-   "n": ""
+   "n": "",
+   "a": "family"
   },
   {
    "id": "rush-2013",
@@ -3717,7 +3896,8 @@
     "loud",
     "violence"
    ],
-   "n": "Graphic crash, sex scenes"
+   "n": "Graphic crash, sex scenes",
+   "a": "adults"
   },
   {
    "id": "coraline-2009",
@@ -3736,7 +3916,8 @@
    "f": [
     "scary"
    ],
-   "n": "Genuinely creepy"
+   "n": "Genuinely creepy",
+   "a": "kids"
   },
   {
    "id": "the-usual-suspects-1995",
@@ -3757,7 +3938,2151 @@
     "violence",
     "language"
    ],
-   "n": ""
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "heat-1995",
+   "t": "Heat",
+   "y": 1995,
+   "c": "15",
+   "r": 170,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "heist",
+    "la",
+    "police"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "loud"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-departed-2006",
+   "t": "The Departed",
+   "y": 2006,
+   "c": "18",
+   "r": 151,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "police",
+    "boston",
+    "twist"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "prisoners-2013",
+   "t": "Prisoners",
+   "y": 2013,
+   "c": "15",
+   "r": 153,
+   "m": [
+    "thrilling",
+    "mystery",
+    "crime"
+   ],
+   "g": [
+    "kidnap",
+    "detective"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "Harrowing",
+   "a": "adults"
+  },
+  {
+   "id": "gone-girl-2014",
+   "t": "Gone Girl",
+   "y": 2014,
+   "c": "18",
+   "r": 149,
+   "m": [
+    "thrilling",
+    "mystery"
+   ],
+   "g": [
+    "twist",
+    "marriage"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "zodiac-2007",
+   "t": "Zodiac",
+   "y": 2007,
+   "c": "15",
+   "r": 157,
+   "m": [
+    "mystery",
+    "truestory",
+    "crime"
+   ],
+   "g": [
+    "detective",
+    "journalism"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "se7en-1995",
+   "t": "Se7en",
+   "y": 1995,
+   "c": "18",
+   "r": 127,
+   "m": [
+    "thrilling",
+    "mystery",
+    "crime"
+   ],
+   "g": [
+    "detective"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "scary"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "nightcrawler-2014",
+   "t": "Nightcrawler",
+   "y": 2014,
+   "c": "15",
+   "r": 117,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "journalism",
+    "la"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "sicario-2015",
+   "t": "Sicario",
+   "y": 2015,
+   "c": "15",
+   "r": 121,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "cartel"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "hell-or-high-water-2016",
+   "t": "Hell or High Water",
+   "y": 2016,
+   "c": "15",
+   "r": 102,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "heist",
+    "texas",
+    "brothers"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "no-country-for-old-men-2007",
+   "t": "No Country for Old Men",
+   "y": 2007,
+   "c": "15",
+   "r": 122,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "texas",
+    "chase"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "fargo-1996",
+   "t": "Fargo",
+   "y": 1996,
+   "c": "18",
+   "r": 98,
+   "m": [
+    "funny",
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "snow",
+    "dark-comedy"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-silence-of-the-lambs-1991",
+   "t": "The Silence of the Lambs",
+   "y": 1991,
+   "c": "18",
+   "r": 118,
+   "m": [
+    "thrilling",
+    "mystery",
+    "crime"
+   ],
+   "g": [
+    "detective",
+    "serial-killer"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "scary"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "memento-2000",
+   "t": "Memento",
+   "y": 2000,
+   "c": "15",
+   "r": 113,
+   "m": [
+    "mystery"
+   ],
+   "g": [
+    "mindbending",
+    "twist",
+    "crime"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-prestige-2006",
+   "t": "The Prestige",
+   "y": 2006,
+   "c": "12A",
+   "r": 130,
+   "m": [
+    "mystery"
+   ],
+   "g": [
+    "mindbending",
+    "magic",
+    "twist",
+    "victorian"
+   ],
+   "i": 2,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "shutter-island-2010",
+   "t": "Shutter Island",
+   "y": 2010,
+   "c": "15",
+   "r": 138,
+   "m": [
+    "mystery",
+    "thrilling"
+   ],
+   "g": [
+    "twist",
+    "detective"
+   ],
+   "i": 3,
+   "f": [
+    "scary",
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "inside-man-2006",
+   "t": "Inside Man",
+   "y": 2006,
+   "c": "15",
+   "r": 129,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "heist",
+    "new-york",
+    "twist"
+   ],
+   "i": 2,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "baby-driver-2017",
+   "t": "Baby Driver",
+   "y": 2017,
+   "c": "15",
+   "r": 113,
+   "m": [
+    "thrilling",
+    "funny",
+    "crime"
+   ],
+   "g": [
+    "heist",
+    "music",
+    "cars"
+   ],
+   "i": 2,
+   "f": [
+    "violence",
+    "loud"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "logan-lucky-2017",
+   "t": "Logan Lucky",
+   "y": 2017,
+   "c": "12A",
+   "r": 118,
+   "m": [
+    "funny",
+    "crime"
+   ],
+   "g": [
+    "heist",
+    "ensemble"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-nice-guys-2016",
+   "t": "The Nice Guys",
+   "y": 2016,
+   "c": "15",
+   "r": 116,
+   "m": [
+    "funny",
+    "mystery",
+    "crime"
+   ],
+   "g": [
+    "70s",
+    "detective",
+    "buddy",
+    "la"
+   ],
+   "i": 2,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "snatch-2000",
+   "t": "Snatch",
+   "y": 2000,
+   "c": "18",
+   "r": 104,
+   "m": [
+    "funny",
+    "crime"
+   ],
+   "g": [
+    "london",
+    "british",
+    "ensemble"
+   ],
+   "i": 2,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "lock-stock-and-two-smoking-barrels-1998",
+   "t": "Lock, Stock and Two Smoking Barrels",
+   "y": 1998,
+   "c": "18",
+   "r": 107,
+   "m": [
+    "funny",
+    "crime"
+   ],
+   "g": [
+    "london",
+    "british",
+    "ensemble"
+   ],
+   "i": 2,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "in-bruges-2008",
+   "t": "In Bruges",
+   "y": 2008,
+   "c": "18",
+   "r": 107,
+   "m": [
+    "funny",
+    "heartfelt",
+    "crime"
+   ],
+   "g": [
+    "belgium",
+    "dark-comedy"
+   ],
+   "i": 2,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-gentlemen-2019",
+   "t": "The Gentlemen",
+   "y": 2019,
+   "c": "18",
+   "r": 113,
+   "m": [
+    "funny",
+    "crime"
+   ],
+   "g": [
+    "british",
+    "london"
+   ],
+   "i": 2,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "wind-river-2017",
+   "t": "Wind River",
+   "y": 2017,
+   "c": "15",
+   "r": 107,
+   "m": [
+    "thrilling",
+    "mystery",
+    "crime"
+   ],
+   "g": [
+    "snow",
+    "detective"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-talented-mr-ripley-1999",
+   "t": "The Talented Mr. Ripley",
+   "y": 1999,
+   "c": "15",
+   "r": 139,
+   "m": [
+    "thrilling",
+    "mystery"
+   ],
+   "g": [
+    "italy",
+    "con"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "argo-2012",
+   "t": "Argo",
+   "y": 2012,
+   "c": "15",
+   "r": 120,
+   "m": [
+    "truestory",
+    "thrilling"
+   ],
+   "g": [
+    "cia",
+    "iran",
+    "rescue"
+   ],
+   "i": 2,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "spotlight-2015",
+   "t": "Spotlight",
+   "y": 2015,
+   "c": "15",
+   "r": 129,
+   "m": [
+    "truestory",
+    "mystery"
+   ],
+   "g": [
+    "journalism"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "About church abuse cover-ups",
+   "a": "adults"
+  },
+  {
+   "id": "bridge-of-spies-2015",
+   "t": "Bridge of Spies",
+   "y": 2015,
+   "c": "12A",
+   "r": 142,
+   "m": [
+    "truestory",
+    "thrilling"
+   ],
+   "g": [
+    "cold-war",
+    "spy",
+    "lawyer"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "tinker-tailor-soldier-spy-2011",
+   "t": "Tinker Tailor Soldier Spy",
+   "y": 2011,
+   "c": "15",
+   "r": 127,
+   "m": [
+    "mystery",
+    "thrilling"
+   ],
+   "g": [
+    "spy",
+    "cold-war",
+    "british"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-bourne-identity-2002",
+   "t": "The Bourne Identity",
+   "y": 2002,
+   "c": "12A",
+   "r": 119,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "spy",
+    "chase",
+    "europe"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "mission-impossible-fallout-2018",
+   "t": "Mission: Impossible – Fallout",
+   "y": 2018,
+   "c": "12A",
+   "r": 147,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "spy",
+    "action"
+   ],
+   "i": 2,
+   "f": [
+    "loud",
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "casino-royale-2006",
+   "t": "Casino Royale",
+   "y": 2006,
+   "c": "12A",
+   "r": 144,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "spy",
+    "bond"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "skyfall-2012",
+   "t": "Skyfall",
+   "y": 2012,
+   "c": "12A",
+   "r": 143,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "spy",
+    "bond",
+    "british"
+   ],
+   "i": 2,
+   "f": [
+    "violence",
+    "loud"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "mad-max-fury-road-2015",
+   "t": "Mad Max: Fury Road",
+   "y": 2015,
+   "c": "15",
+   "r": 120,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "desert",
+    "chase"
+   ],
+   "i": 3,
+   "f": [
+    "loud",
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-dark-knight-2008",
+   "t": "The Dark Knight",
+   "y": 2008,
+   "c": "12A",
+   "r": 152,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "superhero"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "loud"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "oppenheimer-2023",
+   "t": "Oppenheimer",
+   "y": 2023,
+   "c": "15",
+   "r": 180,
+   "m": [
+    "truestory"
+   ],
+   "g": [
+    "history",
+    "science",
+    "ww2"
+   ],
+   "i": 2,
+   "f": [
+    "loud"
+   ],
+   "n": "Three hours",
+   "a": "adults"
+  },
+  {
+   "id": "blade-runner-2049-2017",
+   "t": "Blade Runner 2049",
+   "y": 2017,
+   "c": "15",
+   "r": 164,
+   "m": [
+    "scifi",
+    "mystery"
+   ],
+   "g": [
+    "ai"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "ex-machina-2014",
+   "t": "Ex Machina",
+   "y": 2014,
+   "c": "15",
+   "r": 108,
+   "m": [
+    "scifi",
+    "mystery"
+   ],
+   "g": [
+    "robots",
+    "ai"
+   ],
+   "i": 2,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-matrix-1999",
+   "t": "The Matrix",
+   "y": 1999,
+   "c": "15",
+   "r": 136,
+   "m": [
+    "scifi",
+    "thrilling"
+   ],
+   "g": [
+    "mindbending",
+    "ai"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "everything-everywhere-all-at-once-2022",
+   "t": "Everything Everywhere All at Once",
+   "y": 2022,
+   "c": "15",
+   "r": 139,
+   "m": [
+    "scifi",
+    "funny",
+    "heartfelt"
+   ],
+   "g": [
+    "multiverse",
+    "family"
+   ],
+   "i": 2,
+   "f": [
+    "flashing"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "eternal-sunshine-of-the-spotless-mind-2004",
+   "t": "Eternal Sunshine of the Spotless Mind",
+   "y": 2004,
+   "c": "15",
+   "r": 108,
+   "m": [
+    "scifi",
+    "heartfelt"
+   ],
+   "g": [
+    "romance",
+    "mindbending"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "her-2013",
+   "t": "Her",
+   "y": 2013,
+   "c": "15",
+   "r": 126,
+   "m": [
+    "heartfelt",
+    "scifi"
+   ],
+   "g": [
+    "ai",
+    "romance"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "district-9-2009",
+   "t": "District 9",
+   "y": 2009,
+   "c": "15",
+   "r": 112,
+   "m": [
+    "scifi",
+    "thrilling"
+   ],
+   "g": [
+    "aliens"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "moon-2009",
+   "t": "Moon",
+   "y": 2009,
+   "c": "15",
+   "r": 97,
+   "m": [
+    "scifi",
+    "mystery"
+   ],
+   "g": [
+    "space"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-shawshank-redemption-1994",
+   "t": "The Shawshank Redemption",
+   "y": 1994,
+   "c": "15",
+   "r": 142,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "prison",
+    "friendship"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "good-will-hunting-1997",
+   "t": "Good Will Hunting",
+   "y": 1997,
+   "c": "15",
+   "r": 126,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "maths",
+    "friendship"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-king-s-speech-2010",
+   "t": "The King's Speech",
+   "y": 2010,
+   "c": "12A",
+   "r": 118,
+   "m": [
+    "truestory",
+    "heartfelt"
+   ],
+   "g": [
+    "royals",
+    "british",
+    "friendship"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-social-network-2010",
+   "t": "The Social Network",
+   "y": 2010,
+   "c": "12A",
+   "r": 120,
+   "m": [
+    "truestory"
+   ],
+   "g": [
+    "tech",
+    "startup"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-big-short-2015",
+   "t": "The Big Short",
+   "y": 2015,
+   "c": "15",
+   "r": 130,
+   "m": [
+    "truestory",
+    "funny"
+   ],
+   "g": [
+    "finance"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "whiplash-2014",
+   "t": "Whiplash",
+   "y": 2014,
+   "c": "15",
+   "r": 107,
+   "m": [
+    "thrilling",
+    "heartfelt"
+   ],
+   "g": [
+    "music",
+    "jazz",
+    "mentor"
+   ],
+   "i": 2,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "la-la-land-2016",
+   "t": "La La Land",
+   "y": 2016,
+   "c": "12A",
+   "r": 128,
+   "m": [
+    "musical",
+    "heartfelt"
+   ],
+   "g": [
+    "romance",
+    "la",
+    "jazz"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "green-book-2018",
+   "t": "Green Book",
+   "y": 2018,
+   "c": "12A",
+   "r": 130,
+   "m": [
+    "truestory",
+    "heartfelt"
+   ],
+   "g": [
+    "roadtrip",
+    "music",
+    "friendship"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "parasite-2019",
+   "t": "Parasite",
+   "y": 2019,
+   "c": "15",
+   "r": 132,
+   "m": [
+    "thrilling",
+    "funny"
+   ],
+   "g": [
+    "class",
+    "twist",
+    "korea"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-lives-of-others-2006",
+   "t": "The Lives of Others",
+   "y": 2006,
+   "c": "15",
+   "r": 137,
+   "m": [
+    "thrilling",
+    "heartfelt"
+   ],
+   "g": [
+    "stasi",
+    "germany",
+    "spy"
+   ],
+   "i": 2,
+   "f": [
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "good-bye-lenin-2003",
+   "t": "Good Bye Lenin!",
+   "y": 2003,
+   "c": "15",
+   "r": 121,
+   "m": [
+    "funny",
+    "heartfelt"
+   ],
+   "g": [
+    "germany",
+    "berlin",
+    "family"
+   ],
+   "i": 1,
+   "f": [
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "das-boot-1981",
+   "t": "Das Boot",
+   "y": 1981,
+   "c": "15",
+   "r": 149,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "ww2",
+    "submarine",
+    "sea",
+    "germany"
+   ],
+   "i": 3,
+   "f": [
+    "loud",
+    "violence",
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "run-lola-run-1998",
+   "t": "Run Lola Run",
+   "y": 1998,
+   "c": "15",
+   "r": 81,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "germany",
+    "berlin",
+    "timeloop"
+   ],
+   "i": 2,
+   "f": [
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "am-lie-2001",
+   "t": "Amélie",
+   "y": 2001,
+   "c": "15",
+   "r": 122,
+   "m": [
+    "feelgood",
+    "funny"
+   ],
+   "g": [
+    "paris",
+    "romance"
+   ],
+   "i": 1,
+   "f": [
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "cinema-paradiso-1988",
+   "t": "Cinema Paradiso",
+   "y": 1988,
+   "c": "PG",
+   "r": 155,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "italy",
+    "cinema"
+   ],
+   "i": 1,
+   "f": [
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-banshees-of-inisherin-2022",
+   "t": "The Banshees of Inisherin",
+   "y": 2022,
+   "c": "15",
+   "r": 114,
+   "m": [
+    "funny",
+    "heartfelt"
+   ],
+   "g": [
+    "ireland",
+    "friendship",
+    "dark-comedy"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "three-billboards-outside-ebbing-missouri-2017",
+   "t": "Three Billboards Outside Ebbing, Missouri",
+   "y": 2017,
+   "c": "15",
+   "r": 115,
+   "m": [
+    "funny",
+    "heartfelt",
+    "crime"
+   ],
+   "g": [
+    "small-town",
+    "grief"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-holdovers-2023",
+   "t": "The Holdovers",
+   "y": 2023,
+   "c": "15",
+   "r": 133,
+   "m": [
+    "funny",
+    "heartfelt"
+   ],
+   "g": [
+    "school",
+    "christmas",
+    "70s"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "sideways-2004",
+   "t": "Sideways",
+   "y": 2004,
+   "c": "15",
+   "r": 127,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "roadtrip",
+    "wine",
+    "friendship"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "lost-in-translation-2003",
+   "t": "Lost in Translation",
+   "y": 2003,
+   "c": "15",
+   "r": 102,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "japan",
+    "friendship"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "before-sunrise-1995",
+   "t": "Before Sunrise",
+   "y": 1995,
+   "c": "15",
+   "r": 101,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "romance",
+    "europe"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "past-lives-2023",
+   "t": "Past Lives",
+   "y": 2023,
+   "c": "12A",
+   "r": 105,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "romance",
+    "korea",
+    "new-york"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "brooklyn-2015",
+   "t": "Brooklyn",
+   "y": 2015,
+   "c": "12A",
+   "r": 112,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "romance",
+    "immigrant",
+    "ireland",
+    "new-york"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-remains-of-the-day-1993",
+   "t": "The Remains of the Day",
+   "y": 1993,
+   "c": "U",
+   "r": 134,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "british",
+    "period"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "pride-2014",
+   "t": "Pride",
+   "y": 2014,
+   "c": "15",
+   "r": 120,
+   "m": [
+    "truestory",
+    "funny",
+    "heartfelt"
+   ],
+   "g": [
+    "british",
+    "miners",
+    "80s"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-full-monty-1997",
+   "t": "The Full Monty",
+   "y": 1997,
+   "c": "15",
+   "r": 91,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "british",
+    "sheffield"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "four-weddings-and-a-funeral-1994",
+   "t": "Four Weddings and a Funeral",
+   "y": 1994,
+   "c": "15",
+   "r": 117,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "british",
+    "romance",
+    "weddings"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "hot-fuzz-2007",
+   "t": "Hot Fuzz",
+   "y": 2007,
+   "c": "15",
+   "r": 121,
+   "m": [
+    "funny",
+    "thrilling"
+   ],
+   "g": [
+    "british",
+    "police",
+    "village"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "shaun-of-the-dead-2004",
+   "t": "Shaun of the Dead",
+   "y": 2004,
+   "c": "15",
+   "r": 99,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "british",
+    "zombies"
+   ],
+   "i": 3,
+   "f": [
+    "scary",
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "local-hero-1983",
+   "t": "Local Hero",
+   "y": 1983,
+   "c": "PG",
+   "r": 111,
+   "m": [
+    "funny",
+    "feelgood"
+   ],
+   "g": [
+    "scotland",
+    "village",
+    "sea"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "calendar-girls-2003",
+   "t": "Calendar Girls",
+   "y": 2003,
+   "c": "12A",
+   "r": 108,
+   "m": [
+    "truestory",
+    "funny"
+   ],
+   "g": [
+    "british"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "philomena-2013",
+   "t": "Philomena",
+   "y": 2013,
+   "c": "12A",
+   "r": 98,
+   "m": [
+    "truestory",
+    "heartfelt"
+   ],
+   "g": [
+    "british",
+    "ireland",
+    "journalism"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "belfast-2021",
+   "t": "Belfast",
+   "y": 2021,
+   "c": "12A",
+   "r": 98,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "childhood",
+    "northern-ireland",
+    "60s"
+   ],
+   "i": 2,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "planes-trains-and-automobiles-1987",
+   "t": "Planes, Trains and Automobiles",
+   "y": 1987,
+   "c": "15",
+   "r": 93,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "roadtrip",
+    "buddy"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-blues-brothers-1980",
+   "t": "The Blues Brothers",
+   "y": 1980,
+   "c": "15",
+   "r": 133,
+   "m": [
+    "funny",
+    "musical"
+   ],
+   "g": [
+    "chicago",
+    "cars"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "airplane-1980",
+   "t": "Airplane!",
+   "y": 1980,
+   "c": "PG",
+   "r": 88,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "parody",
+    "planes"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "this-is-spinal-tap-1984",
+   "t": "This Is Spinal Tap",
+   "y": 1984,
+   "c": "15",
+   "r": 82,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "music",
+    "band",
+    "mockumentary"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "some-like-it-hot-1959",
+   "t": "Some Like It Hot",
+   "y": 1959,
+   "c": "PG",
+   "r": 121,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "romance",
+    "disguise"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "casablanca-1942",
+   "t": "Casablanca",
+   "y": 1942,
+   "c": "U",
+   "r": 102,
+   "m": [
+    "heartfelt"
+   ],
+   "g": [
+    "romance",
+    "ww2"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-godfather-1972",
+   "t": "The Godfather",
+   "y": 1972,
+   "c": "18",
+   "r": 175,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "mafia",
+    "family"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "goodfellas-1990",
+   "t": "Goodfellas",
+   "y": 1990,
+   "c": "18",
+   "r": 145,
+   "m": [
+    "thrilling",
+    "crime"
+   ],
+   "g": [
+    "mafia"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "jaws-1975",
+   "t": "Jaws",
+   "y": 1975,
+   "c": "12A",
+   "r": 124,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "sea",
+    "shark",
+    "beach"
+   ],
+   "i": 3,
+   "f": [
+    "scary"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-perfect-storm-2000",
+   "t": "The Perfect Storm",
+   "y": 2000,
+   "c": "12A",
+   "r": 130,
+   "m": [
+    "truestory",
+    "thrilling"
+   ],
+   "g": [
+    "sea",
+    "fishing",
+    "storm"
+   ],
+   "i": 3,
+   "f": [
+    "loud",
+    "sad"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "all-is-lost-2013",
+   "t": "All Is Lost",
+   "y": 2013,
+   "c": "12A",
+   "r": 106,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "sailing",
+    "survival",
+    "sea"
+   ],
+   "i": 2,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "captain-phillips-2013",
+   "t": "Captain Phillips",
+   "y": 2013,
+   "c": "12A",
+   "r": 134,
+   "m": [
+    "truestory",
+    "thrilling"
+   ],
+   "g": [
+    "sea",
+    "pirates",
+    "navy"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "greyhound-2020",
+   "t": "Greyhound",
+   "y": 2020,
+   "c": "12A",
+   "r": 91,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "ww2",
+    "navy",
+    "sea"
+   ],
+   "i": 2,
+   "f": [
+    "loud"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-boat-that-rocked-2009",
+   "t": "The Boat That Rocked",
+   "y": 2009,
+   "c": "15",
+   "r": 135,
+   "m": [
+    "funny"
+   ],
+   "g": [
+    "music",
+    "sea",
+    "60s",
+    "british"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "senna-2010",
+   "t": "Senna",
+   "y": 2010,
+   "c": "12A",
+   "r": 106,
+   "m": [
+    "truestory",
+    "sport"
+   ],
+   "g": [
+    "f1",
+    "racing",
+    "documentary"
+   ],
+   "i": 1,
+   "f": [
+    "sad"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "free-solo-2018",
+   "t": "Free Solo",
+   "y": 2018,
+   "c": "12A",
+   "r": 100,
+   "m": [
+    "truestory",
+    "thrilling"
+   ],
+   "g": [
+    "climbing",
+    "documentary"
+   ],
+   "i": 2,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "dune-part-two-2024",
+   "t": "Dune: Part Two",
+   "y": 2024,
+   "c": "12A",
+   "r": 166,
+   "m": [
+    "scifi",
+    "thrilling"
+   ],
+   "g": [
+    "desert",
+    "epic"
+   ],
+   "i": 3,
+   "f": [
+    "loud",
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "gladiator-2000",
+   "t": "Gladiator",
+   "y": 2000,
+   "c": "15",
+   "r": 155,
+   "m": [
+    "thrilling",
+    "adventure"
+   ],
+   "g": [
+    "rome",
+    "epic"
+   ],
+   "i": 3,
+   "f": [
+    "violence"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "saving-private-ryan-1998",
+   "t": "Saving Private Ryan",
+   "y": 1998,
+   "c": "15",
+   "r": 169,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "ww2",
+    "war"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "loud"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "the-great-escape-1963",
+   "t": "The Great Escape",
+   "y": 1963,
+   "c": "PG",
+   "r": 172,
+   "m": [
+    "adventure",
+    "truestory"
+   ],
+   "g": [
+    "ww2",
+    "escape"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "conclave-2024",
+   "t": "Conclave",
+   "y": 2024,
+   "c": "12A",
+   "r": 120,
+   "m": [
+    "mystery",
+    "thrilling"
+   ],
+   "g": [
+    "vatican",
+    "election"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "anatomy-of-a-fall-2023",
+   "t": "Anatomy of a Fall",
+   "y": 2023,
+   "c": "15",
+   "r": 151,
+   "m": [
+    "mystery"
+   ],
+   "g": [
+    "courtroom",
+    "france"
+   ],
+   "i": 1,
+   "f": [
+    "language",
+    "subtitles"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "a-few-good-men-1992",
+   "t": "A Few Good Men",
+   "y": 1992,
+   "c": "15",
+   "r": 138,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "courtroom",
+    "military"
+   ],
+   "i": 1,
+   "f": [
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "12-angry-men-1957",
+   "t": "12 Angry Men",
+   "y": 1957,
+   "c": "U",
+   "r": 96,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "courtroom"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "top-gun-1986",
+   "t": "Top Gun",
+   "y": 1986,
+   "c": "15",
+   "r": 110,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "planes"
+   ],
+   "i": 1,
+   "f": [],
+   "n": "",
+   "a": "adults"
+  },
+  {
+   "id": "die-hard-1988",
+   "t": "Die Hard",
+   "y": 1988,
+   "c": "18",
+   "r": 132,
+   "m": [
+    "thrilling"
+   ],
+   "g": [
+    "christmas",
+    "action"
+   ],
+   "i": 3,
+   "f": [
+    "violence",
+    "language"
+   ],
+   "n": "",
+   "a": "adults"
   }
  ],
  "seen": [
@@ -3853,6 +6178,24 @@
   },
   {
    "id": "the-martian-2015",
+   "who": [
+    "Family"
+   ]
+  },
+  {
+   "id": "the-goonies-1985",
+   "who": [
+    "Family"
+   ]
+  },
+  {
+   "id": "matilda-1996",
+   "who": [
+    "Family"
+   ]
+  },
+  {
+   "id": "forrest-gump-1994",
    "who": [
     "Family"
    ]

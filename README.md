@@ -24,6 +24,12 @@ If the log lists films "Not found on TMDB", add their TMDB number to `tmdb-ids.j
 - "We've seen it" saves on that phone only. Use "Copy watched list to send to Claude" and paste it into a chat to get it added to the shared list.
 - To change which services count as yours, edit `OUR_SERVICES` near the top of `app.js`.
 
+## How picks work
+- As well as the hand-picked films in `catalogue.json`, the nightly refresh adds every well-known film currently on your services (up to 2,500, most popular first). Their moods come from TMDB genres and keywords, and their watch-outs aren't hand-checked, so Gentle mode only shows the U and PG ones. Settings are at the top of `refresh.py`.
+- Who's watching hides films any of them has seen. With no kids selected, grown-up films rise to the top and kids' films sink.
+- Gentle mode comes on whenever Kid 2 is selected and goes off otherwise; you can still flip it by hand.
+- Each ticket says whether a film is free (BBC iPlayer, ITVX, Channel 4, My5), included with a subscription (Netflix, Prime Video, Disney+), or only to rent or buy.
+
 ## Credits and privacy
 Streaming data from JustWatch via TMDB. This app uses the TMDB API but is not endorsed or certified by TMDB. IMDb ratings from IMDb's non-commercial datasets.
 

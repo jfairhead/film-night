@@ -2,12 +2,15 @@
 
 For each film it adds:
   imdb  IMDb ID (from TMDB)            ir/iv  IMDb rating and vote count (IMDb datasets)
-  p     your-service platforms in the UK   po  other UK subscription platforms
+  p     your services in the UK as [name, "free" | "inc"]
+  po    other UK subscription services      pr  where it can be rented or bought
   c, r  BBFC certificate and runtime from TMDB when available
+It also adds every well-known film currently on your services ("auto" films), with moods and tags
+worked out from TMDB genres and keywords. Their watch-outs are not hand-checked.
 Needs a TMDB key in the environment: TMDB_TOKEN (API Read Access Token) or TMDB_API_KEY.
 Streaming data: JustWatch via TMDB. IMDb data: datasets.imdbws.com (personal, non-commercial use).
 """
-import csv, datetime, gzip, io, json, os, sys, time, urllib.parse, urllib.request
+import csv, datetime, gzip, io, json, os, re, sys, time, urllib.parse, urllib.request
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CAT = os.path.join(ROOT, "catalogue.json")
@@ -20,6 +23,20 @@ TOKEN, KEY = os.environ.get("TMDB_TOKEN"), os.environ.get("TMDB_API_KEY")
 SERVICES = [("netflix", "Netflix"), ("amazon prime video", "Prime Video"), ("disney", "Disney+"),
             ("iplayer", "BBC iPlayer"), ("itvx", "ITVX"), ("channel 4", "Channel 4"), ("all 4", "Channel 4"),
             ("my5", "My5"), ("channel 5", "My5")]
+FREE_SERVICES = {"BBC iPlayer", "ITVX", "Channel 4", "My5"}
+STORES = [("apple", "Apple TV"), ("amazon", "Prime Video"), ("google", "Google Play"), ("sky store", "Sky Store"),
+          ("rakuten", "Rakuten TV"), ("youtube", "YouTube")]
+# Auto films: well-known films on your services, most-voted first
+AUTO_MIN_VOTES = 300          # TMDB votes; keeps out obscure titles
+AUTO_MAX = 2500               # cap so the app stays quick on a phone
+AUTO_PAGES_PER_SERVICE = 60   # 20 films a page
+GENRE_MOODS = {"Action": "thrilling", "Adventure": "adventure", "Animation": "animated", "Comedy": "funny",
+               "Crime": "crime", "Documentary": "truestory", "Drama": "heartfelt", "Family": "feelgood",
+               "Fantasy": "adventure", "History": "truestory", "Horror": "thrilling", "Music": "musical",
+               "Mystery": "mystery", "Romance": "heartfelt", "Science Fiction": "scifi", "Thriller": "thrilling",
+               "War": "thrilling", "Western": "adventure"}
+# Films the TMDB search can't find on its own
+OVERRIDES = {"kiki-s-delivery-service-1989": 16859, "kon-tiki-2012": 70667}
 
 
 def get_json(path, **params):
@@ -61,17 +78,95 @@ def find_tmdb_id(f):
 
 def platforms(wp):
     gb = ((wp or {}).get("results") or {}).get("GB") or {}
-    names = []
-    for kind in ("flatrate", "free", "ads"):
+    ours, other, stores = {}, [], []
+    for kind in ("flatrate", "ads", "free"):
         for p in gb.get(kind) or []:
-            names.append(p.get("provider_name", ""))
-    ours, other = [], []
-    for n in names:
-        low = n.lower()
-        hit = next((label for key, label in SERVICES if key in low), None)
-        if hit and hit not in ours: ours.append(hit)
-        elif not hit and n and n not in other: other.append(n)
-    return ours, other
+            n = p.get("provider_name", "")
+            hit = next((label for key, label in SERVICES if key in n.lower()), None)
+            if hit:
+                free = hit in FREE_SERVICES or kind == "free"
+                ours[hit] = "free" if free or ours.get(hit) == "free" else "inc"
+            elif n and n not in other:
+                other.append(n)
+    for kind in ("rent", "buy"):
+        for p in gb.get(kind) or []:
+            n = p.get("provider_name", "").lower()
+            label = next((l for key, l in STORES if key in n), None)
+            if label and label not in stores:
+                stores.append(label)
+    order = sorted(ours.items(), key=lambda kv: kv[1] != "free")
+    return [[k, v] for k, v in order], other, stores
+
+
+def slug(t, y):
+    return re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-") + f"-{y}"
+
+
+def service_ids():
+    res = get_json("/watch/providers/movie", watch_region="GB", language="en-GB") or {}
+    out = {}
+    for p in res.get("results") or []:
+        low = (p.get("provider_name") or "").lower()
+        label = next((l for key, l in SERVICES if key in low), None)
+        if label:
+            out.setdefault(label, []).append(str(p["provider_id"]))
+    return out
+
+
+def discover_auto(skip_tmdb):
+    """tmdb id -> {"r": search result, "labels": set of services}"""
+    found = {}
+    for label, pids in service_ids().items():
+        for page in range(1, AUTO_PAGES_PER_SERVICE + 1):
+            res = get_json("/discover/movie", watch_region="GB", with_watch_providers="|".join(pids),
+                           with_watch_monetization_types="flatrate|free|ads", sort_by="vote_count.desc",
+                           include_adult="false", language="en-GB", page=page,
+                           **{"vote_count.gte": AUTO_MIN_VOTES}) or {}
+            for r in res.get("results") or []:
+                if r["id"] in skip_tmdb or not (r.get("release_date") or "")[:4].isdigit():
+                    continue
+                found.setdefault(r["id"], {"r": r, "labels": set()})["labels"].add(label)
+            if page >= (res.get("total_pages") or 0):
+                break
+            time.sleep(0.05)
+        print(f"  {label}: {sum(1 for v in found.values() if label in v['labels'])} films", flush=True)
+    ranked = sorted(found.items(), key=lambda kv: -(kv[1]["r"].get("vote_count") or 0))
+    return dict(ranked[:AUTO_MAX])
+
+
+def auto_film(tid, info, cache):
+    r = info["r"]
+    p = [[l, "free" if l in FREE_SERVICES else "inc"] for l in sorted(info["labels"], key=lambda l: l not in FREE_SERVICES)]
+    base = cache.get(tid)
+    if not base:
+        d = get_json(f"/movie/{tid}", language="en-GB", append_to_response="external_ids,release_dates,keywords") or {}
+        time.sleep(0.05)
+        genres = [g["name"] for g in d.get("genres") or []]
+        kws = [k["name"] for k in ((d.get("keywords") or {}).get("keywords") or [])]
+        moods = []
+        for g in genres:
+            m = GENRE_MOODS.get(g)
+            if m and m not in moods: moods.append(m)
+        low = " ".join(kws).lower()
+        if "sport" in low and "sport" not in moods: moods.append("sport")
+        if "based on true story" in low and "truestory" not in moods: moods.append("truestory")
+        cert = gb_cert(d.get("release_dates")) or "?"
+        horror = "Horror" in genres
+        intensity = 3 if (cert == "18" or horror) else (2 if cert in ("12", "12A", "15", "?") else 1)
+        flags = (["scary"] if horror else []) + (["subtitles"] if d.get("original_language") not in (None, "en") else [])
+        adult = cert in ("15", "18")
+        kids = cert in ("U", "PG") and "animated" in moods
+        y = int(r["release_date"][:4])
+        title = d.get("title") or r.get("title")
+        base = {"id": slug(title, y), "t": title, "y": y, "c": cert, "r": d.get("runtime") or 0,
+                "m": moods, "g": [re.sub(r"[^a-z0-9]+", "-", x.lower()).strip("-") for x in kws[:12] + genres],
+                "i": intensity, "f": flags, "n": "Watch-outs not checked",
+                "a": "adults" if adult else ("kids" if kids else "family"), "auto": 1, "tm": tid}
+        imdb = (d.get("external_ids") or {}).get("imdb_id")
+        if imdb: base["imdb"] = imdb
+    f = dict(base)
+    f.update({"p": p, "po": [], "pr": [], "tr": r.get("vote_average")})
+    return f
 
 
 def gb_cert(rd):
@@ -103,7 +198,7 @@ def main():
     missing, films = [], []
     for f in cat["films"]:
         f = dict(f)
-        tid = ids.get(f["id"])
+        tid = ids.get(f["id"]) or OVERRIDES.get(f["id"])
         if not tid:
             tid = find_tmdb_id(f)
             if tid: ids[f["id"]] = tid
@@ -113,12 +208,34 @@ def main():
         f["tm"] = tid
         imdb = (d.get("external_ids") or {}).get("imdb_id") or d.get("imdb_id")
         if imdb: f["imdb"] = imdb
-        f["p"], f["po"] = platforms(d.get("watch/providers"))
+        f["p"], f["po"], f["pr"] = platforms(d.get("watch/providers"))
+        ty = (d.get("release_date") or "0")[:4]
+        if ty.isdigit() and abs(int(ty) - f["y"]) > 1:
+            print(f"Check TMDB id for {f['t']} ({f['y']}): it points to {d.get('title')} ({ty})")
         cert = gb_cert(d.get("release_dates"))
         if cert: f["c"] = cert
         if d.get("runtime"): f["r"] = d["runtime"]
         films.append(f)
         time.sleep(0.05)
+    # Auto films, reusing details from the last run so only new arrivals cost API calls
+    cache = {}
+    if os.path.exists(OUT):
+        try:
+            for f in json.load(open(OUT)).get("films", []):
+                if f.get("auto") and f.get("tm"):
+                    cache[f["tm"]] = {k: v for k, v in f.items() if k not in ("p", "po", "pr", "tr", "ir", "iv")}
+        except ValueError:
+            pass
+    print("Finding films on your services...", flush=True)
+    known = {f.get("tm") for f in films if f.get("tm")}
+    used = {f["id"] for f in films}
+    auto = []
+    for tid, info in discover_auto(known).items():
+        f = auto_film(tid, info, cache)
+        if f["id"] in used:
+            continue
+        used.add(f["id"]); auto.append(f)
+    films += auto
     ratings = load_ratings({f["imdb"] for f in films if f.get("imdb")})
     for f in films:
         if f.get("imdb") in ratings:
@@ -127,7 +244,8 @@ def main():
     json.dump(out, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
     json.dump(dict(sorted(ids.items())), open(IDS, "w"), indent=1)
     on = sum(1 for f in films if f.get("p"))
-    print(f"{len(films)} films, {on} on your services, {len(ratings)} with IMDb ratings")
+    print(f"{len(films)} films ({len(films) - len(auto)} hand-picked, {len(auto)} added from your services), "
+          f"{on} on your services, {len(ratings)} with IMDb ratings")
     if missing:
         print("Not found on TMDB (add the TMDB id to tmdb-ids.json):", "; ".join(missing))
 

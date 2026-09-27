@@ -4,7 +4,7 @@ const KIDS = ["Kid 1", "Kid 2"];
 const MOODS = [
   ["feelgood", "Feel good"], ["funny", "Funny"], ["thrilling", "Thrilling"], ["mystery", "Mystery"],
   ["adventure", "Adventure"], ["animated", "Animated"], ["heartfelt", "Heartfelt"], ["truestory", "True story"],
-  ["scifi", "Sci-fi"], ["sport", "Sport"], ["musical", "Musical"]
+  ["crime", "Crime"], ["scifi", "Sci-fi"], ["sport", "Sport"], ["musical", "Musical"]
 ];
 const FLAG_TEXT = { loud: "Loud scenes", flashing: "Flashing lights", scary: "Scary moments", violence: "Some violence",
   sad: "Sad moments", language: "Strong language", subtitles: "Subtitles" };
@@ -21,10 +21,14 @@ const store = {
 let DATA = { films: [], seen: [] };
 let byId = new Map();
 const enriched = () => !!DATA.checked;
-const onOurs = (f) => (f.p || []).some((x) => OUR_SERVICES.includes(x));
+const plats = (f) => (f.p || []).map((x) => (Array.isArray(x) ? x : [x, "inc"])).filter(([n]) => OUR_SERVICES.includes(n));
+const onOurs = (f) => plats(f).length > 0;
+const kidsIn = () => KIDS.some((k) => state.who.has(k));
+// On a grown-ups' night, kids' films sink and grown-up films rise
+const AUDIENCE_WEIGHT = { kids: -4, family: -0.5, adults: 1.5 };
 const state = {
   who: new Set(store.get("who", ["Mum", "Dad"])),
-  gentle: store.get("gentle", true),
+  gentle: false, // set from who's watching on load
   ours: store.get("ours", true),
   mood: null,
   like: null,
@@ -50,12 +54,16 @@ function hiddenAsSeen(id) {
 }
 function allowed(f) {
   if (state.gentle && f.i >= 3) return false;
+  // Auto-added films have no hand-checked watch-outs, so Gentle mode only keeps U and PG ones
+  if (state.gentle && f.auto && !["U", "PG"].includes(f.c)) return false;
   if (state.ours && enriched() && !onOurs(f)) return false;
-  if (f.c === "18" && KIDS.some((k) => state.who.has(k))) return false;
+  if ((f.c === "18" || f.c === "?") && kidsIn()) return false;
   return !hiddenAsSeen(f.id);
 }
+const stem = (t) => t.replace(/s$/, "");
 function similarity(a, b) {
-  const tags = a.g.filter((t) => b.g.includes(t));
+  const bs = new Set(b.g.map(stem));
+  const tags = a.g.filter((t) => bs.has(stem(t)));
   const moods = a.m.filter((m) => b.m.includes(m));
   return { score: tags.length * 2 + moods.length * 1.5, tags };
 }
@@ -72,7 +80,7 @@ function ranked() {
       if (s.tags.length) why = `Like ${liked.t}: ${s.tags.slice(0, 3).map((t) => t.replace(/-/g, " ")).join(", ")}`;
       else if (score) why = `Same kind of mood as ${liked.t}`;
     }
-    return { f, score, why, key: score + (f.ir || 6.5) * 0.25 + rand(state.seed, f.id) * 1.2 };
+    return { f, score, why, key: score + (f.ir || f.tr || 6.5) * 0.25 + (f.auto ? 0 : 0.6) + (kidsIn() ? 0 : AUDIENCE_WEIGHT[f.a] || 0) + rand(state.seed, f.id) * 1.2 };
   }).filter((x) => !liked || x.score > 0);
   scored.sort((a, b) => b.key - a.key);
   return scored;
@@ -94,10 +102,16 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
 
 function whereLine(f) {
   if (!enriched()) return "";
-  const ours = (f.p || []).filter((x) => OUR_SERVICES.includes(x));
-  if (ours.length) return "On " + ours.join(", ");
-  if (f.po && f.po.length) return "Not on your services. On " + f.po.slice(0, 2).join(", ");
-  return "Not streaming on a subscription in the UK";
+  const p = plats(f);
+  const free = p.filter(([, k]) => k === "free").map(([n]) => n);
+  const inc = p.filter(([, k]) => k !== "free").map(([n]) => n);
+  const parts = [];
+  if (free.length) parts.push("Free on " + free.join(", "));
+  if (inc.length) parts.push("Included with " + inc.join(", "));
+  if (parts.length) return parts.join(". ");
+  if (f.po && f.po.length) parts.push("Not on your services. On " + f.po.slice(0, 2).join(", "));
+  if (f.pr && f.pr.length) parts.push("Rent or buy on " + f.pr.slice(0, 3).join(", "));
+  return parts.join(". ") || "Not streaming in the UK right now";
 }
 function whoText() {
   const w = VIEWERS.filter((v) => state.who.has(v));
@@ -114,7 +128,7 @@ function render() {
   $("ours").checked = state.ours;
   $("ours-row").hidden = !enriched();
   $("gentle-hint").textContent = state.gentle
-    ? "Hides intense films and puts loud or flashing scenes first in the watch-outs."
+    ? "Hides intense films and puts loud or flashing scenes first in the watch-outs. Comes on with Kid 2."
     : "Showing everything, including intense films.";
 
   const res = $("results");
@@ -140,7 +154,7 @@ function render() {
     return `<article class="ticket">
       <div class="body">
         <h3>${esc(f.t)}</h3>
-        <p class="meta">${f.y}${f.ir ? `, IMDb ${f.ir.toFixed(1)}` : ""}</p>
+        <p class="meta">${f.y}${f.ir ? `, IMDb ${f.ir.toFixed(1)}` : f.tr ? `, TMDB ${Number(f.tr).toFixed(1)}` : ""}</p>
         ${whereLine(f) ? `<p class="where">${esc(whereLine(f))}</p>` : ""}
         <p class="why">${esc(why || moodLine(f))}</p>
         ${warn ? `<p class="warn">${esc(warn)}</p>` : ""}
@@ -151,7 +165,7 @@ function render() {
         </div>
       </div>
       <div class="stub" aria-label="Certificate ${f.c}, ${f.r} minutes">
-        <span class="cert">${esc(f.c)}</span><span class="mins">${f.r} min</span>
+        <span class="cert">${esc(f.c)}</span>${f.r ? `<span class="mins">${f.r} min</span>` : ""}
       </div>
     </article>`;
   }).join("");
@@ -168,6 +182,7 @@ function wire() {
   $("who").addEventListener("click", (e) => {
     const b = e.target.closest("[data-who]"); if (!b) return;
     const v = b.dataset.who; state.who.has(v) ? state.who.delete(v) : state.who.add(v);
+    if (v === "Kid 2") state.gentle = state.who.has("Kid 2");
     store.set("who", [...state.who]); state.page = 0; render();
   });
   $("moods").addEventListener("click", (e) => {
@@ -175,7 +190,7 @@ function wire() {
     state.mood = state.mood === b.dataset.mood ? null : b.dataset.mood; state.page = 0; render();
   });
   $("ours").addEventListener("change", (e) => { state.ours = e.target.checked; store.set("ours", state.ours); state.page = 0; render(); });
-  $("gentle").addEventListener("change", (e) => { state.gentle = e.target.checked; store.set("gentle", state.gentle); state.page = 0; render(); });
+  $("gentle").addEventListener("change", (e) => { state.gentle = e.target.checked; state.page = 0; render(); });
   $("shuffle").addEventListener("click", () => {
     if (!state.mood && !state.like) state.seed = Math.floor(Math.random() * 1e9); else state.page++;
     render(); $("results").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -233,10 +248,13 @@ async function start() {
     return;
   }
   byId = new Map(DATA.films.map((f) => [f.id, f]));
+  state.gentle = state.who.has("Kid 2");
   // Drop local marks that the shared list now covers
   for (const s of DATA.seen) if (localSeen[s.id]) delete localSeen[s.id];
   store.set("seenLocal", localSeen);
-  $("updated").textContent = `Film list updated ${new Date(DATA.updated).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}. ${DATA.checked ? `Streaming checked ${new Date(DATA.checked).toLocaleDateString("en-GB", { day: "numeric", month: "long" })}.` : ""} Certificates are a guide.`;
+  const autoN = DATA.films.filter((f) => f.auto).length;
+  $("updated").textContent = `${DATA.films.length - autoN} hand-picked films${autoN ? ` and ${autoN} more from your services` : ""}. `;
+  $("updated").textContent += `Film list updated ${new Date(DATA.updated).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}. ${DATA.checked ? `Streaming checked ${new Date(DATA.checked).toLocaleDateString("en-GB", { day: "numeric", month: "long" })}.` : ""} Certificates are a guide.`;
   render();
 }
 start();

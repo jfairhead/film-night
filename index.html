@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Film night</title>
+<meta name="theme-color" content="#171A33">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#171A33; --raise:#232748; --line:#363B66; --text:#F3EEDF; --muted:#A9ACCB;
+  --pop:#F5C542; --popInk:#2A2106; --paper:#FBF3DC; --ink:#221F2E; --inkMuted:#5E5A6B; --cherry:#D64550;
+  --font:"Bricolage Grotesque", ui-rounded, "Segoe UI", system-ui, -apple-system, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#DCE2F1; --raise:#EEF1F9; --line:#B9C1DB; --text:#1B1F3A; --muted:#4E5577; --pop:#F5C542; }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.45;
+  -webkit-font-smoothing:antialiased}
+main{max-width:560px;margin:0 auto;padding:20px 18px 48px}
+h1{font-size:44px;line-height:1;font-weight:800;letter-spacing:-.02em;margin:12px 0 22px;font-variation-settings:"opsz" 96}
+h2{font-size:22px;font-weight:800;margin:0 0 10px;letter-spacing:-.01em}
+p{margin:0}
+section{margin-bottom:26px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:16px;font-weight:600;color:var(--text);background:var(--raise);border:1.5px solid var(--line);
+  border-radius:999px;padding:9px 15px;cursor:pointer;min-height:44px}
+.chip[aria-pressed="true"]{background:var(--pop);color:var(--popInk);border-color:var(--pop)}
+.chip:focus-visible,.btn:focus-visible,input:focus-visible,.switch:focus-within{outline:3px solid var(--pop);outline-offset:2px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.switch{display:flex;align-items:center;gap:10px;font-weight:600;cursor:pointer;border-radius:999px}
+.switch input{appearance:none;width:52px;height:30px;border-radius:999px;background:var(--line);position:relative;margin:0;cursor:pointer;transition:background .15s}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--text);transition:transform .15s}
+.switch input:checked{background:var(--pop)}
+.switch input:checked::after{transform:translateX(22px);background:var(--popInk)}
+.hint{color:var(--muted);font-size:15px}
+.search{position:relative}
+input[type=search]{width:100%;font:inherit;font-size:18px;color:var(--text);background:var(--raise);border:1.5px solid var(--line);
+  border-radius:14px;padding:12px 14px;min-height:50px}
+input::placeholder{color:var(--muted)}
+.suggest{list-style:none;margin:6px 0 0;padding:6px;background:var(--raise);border:1.5px solid var(--line);border-radius:14px}
+.suggest button{all:unset;display:block;width:100%;padding:10px 10px;border-radius:10px;cursor:pointer;font-weight:600}
+.suggest button:hover,.suggest button:focus-visible{background:var(--line)}
+.results-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:6px 0 14px}
+.results-head p{font-weight:600}
+.btn{font:inherit;font-weight:700;font-size:16px;border-radius:12px;padding:10px 14px;min-height:44px;cursor:pointer;border:1.5px solid var(--line);
+  background:var(--raise);color:var(--text);text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.btn.primary{background:var(--pop);color:var(--popInk);border-color:var(--pop)}
+
+/* The ticket: the one bold element */
+.tickets{display:grid;gap:16px}
+.ticket{display:grid;grid-template-columns:1fr 84px;background:var(--paper);color:var(--ink);border-radius:14px;
+  -webkit-mask:radial-gradient(circle 11px at calc(100% - 84px) 0,#0000 98%,#000) top/100% 51% no-repeat,
+               radial-gradient(circle 11px at calc(100% - 84px) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+          mask:radial-gradient(circle 11px at calc(100% - 84px) 0,#0000 98%,#000) top/100% 51% no-repeat,
+               radial-gradient(circle 11px at calc(100% - 84px) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.ticket .body{padding:16px 16px 14px}
+.ticket h3{font-size:23px;line-height:1.15;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+.ticket .meta{color:var(--inkMuted);font-size:15px;margin-bottom:8px}
+.ticket .why{font-size:15.5px}
+.ticket .where{font-size:15.5px;font-weight:700;margin-bottom:4px}
+.ticket .warn{margin-top:8px;font-size:15px;color:#9B2231;font-weight:600}
+.ticket .seenby{margin-top:8px;font-size:15px;color:var(--inkMuted)}
+.ticket .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ticket .actions .btn{background:transparent;color:var(--ink);border-color:#CFC4A3;font-size:15px;padding:8px 12px;min-height:40px}
+.ticket .actions .btn.done{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.stub{border-left:2px dashed #CFC4A3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 6px;text-align:center}
+.stub .cert{font-size:30px;font-weight:800;line-height:1}
+.stub .mins{font-size:14px;color:var(--inkMuted);font-weight:600}
+.empty{background:var(--raise);border:1.5px dashed var(--line);border-radius:14px;padding:18px}
+footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;display:grid;gap:10px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--pop);color:var(--popInk);
+  font-weight:700;padding:10px 16px;border-radius:12px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <h1>Film night</h1>
+
+  <section aria-labelledby="who-h">
+    <h2 id="who-h">Who's watching?</h2>
+    <div class="chips" id="who"></div>
+    <div class="row">
+      <label class="switch"><input type="checkbox" id="gentle" role="switch"> Gentle mode</label>
+    </div>
+    <p class="hint" id="gentle-hint"></p>
+    <div id="ours-row" hidden>
+      <div class="row"><label class="switch"><input type="checkbox" id="ours" role="switch"> Only our services</label></div>
+      <p class="hint">Netflix, Prime Video, Disney+ and free TV catch-up.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="mood-h">
+    <h2 id="mood-h">In the mood for…</h2>
+    <div class="chips" id="moods"></div>
+  </section>
+
+  <section aria-labelledby="like-h">
+    <h2 id="like-h">Something like…</h2>
+    <div class="search">
+      <input type="search" id="like" placeholder="Type a film you enjoyed" autocomplete="off" aria-describedby="like-hint">
+      <ul class="suggest" id="suggest" hidden></ul>
+    </div>
+    <p class="hint" id="like-hint" style="margin-top:6px"></p>
+  </section>
+
+  <section aria-live="polite">
+    <div class="results-head">
+      <p id="summary"></p>
+      <button class="btn" id="shuffle" type="button">Shuffle</button>
+    </div>
+    <div class="tickets" id="results"></div>
+  </section>
+
+  <footer>
+    <p class="hint" id="local-count"></p>
+    <button class="btn" id="copy" type="button">Copy watched list to send to Claude</button>
+    <p class="hint" id="updated"></p>
+    <p class="hint">Streaming data from JustWatch, via TMDB. This app uses the TMDB API but is not endorsed or certified by TMDB. Ratings from IMDb.</p>
+  </footer>
+</main>
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -72,6 +72,10 @@ input::placeholder{color:var(--muted)}
 .ticket .meta{color:var(--inkMuted);font-size:15px;margin-bottom:8px}
 .ticket .why{font-size:15.5px}
 .ticket .where{font-size:15.5px;font-weight:700;margin-bottom:4px}
+.ticket .status{margin-top:2px;font-size:15px;font-weight:700;color:var(--inkMuted)}
+.ticket .about{margin-top:8px;font-size:15.5px}
+.ticket details.about summary{cursor:pointer;font-weight:700;color:var(--inkMuted);min-height:32px;display:flex;align-items:center}
+.ticket details.about p{margin-top:4px}
 .ticket .warn{margin-top:8px;font-size:15px;color:#9B2231;font-weight:600}
 .ticket .seenby{margin-top:8px;font-size:15px;color:var(--inkMuted)}
 .ticket .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -93,6 +97,12 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
 <body>
 <main>
   <h1>Film night</h1>
+
+  <section aria-labelledby="lookup-h">
+    <h2 id="lookup-h">Look up a film</h2>
+    <input type="search" id="lookup" placeholder="Search by title" autocomplete="off">
+    <div id="lookup-results" aria-live="polite" style="margin-top:12px"></div>
+  </section>
 
   <section aria-labelledby="who-h">
     <h2 id="who-h">Who's watching?</h2>

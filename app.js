@@ -178,29 +178,63 @@ function render() {
     return;
   }
   $("summary").textContent = `${list.length} ${list.length === 1 ? "film fits" : "films fit"} ${whoText()}. Showing ${page * PER_PAGE + 1} to ${page * PER_PAGE + shown.length}.`;
-  res.innerHTML = shown.map(({ f, why }) => {
-    const warn = warnLine(f);
-    return `<article class="ticket">
+  res.innerHTML = shown.map(({ f, why }) => ticketHTML(f, why)).join("");
+  const ls = Object.keys(localSeen).length;
+  $("local-count").textContent = ls ? `${ls} ${ls === 1 ? "film" : "films"} marked as seen on this phone. They stay hidden until you clear them.` : "Films you mark as seen are saved on this phone and stay hidden.";
+}
+
+function statusLine(f) {
+  const who = [...seenBy(f.id)];
+  if (who.includes("Family")) return "You've all seen this";
+  if (who.length) return "Seen by " + who.join(", ");
+  if (skipped[f.id]) return "Hidden for tonight";
+  return "";
+}
+function ticketHTML(f, why, lookup) {
+  const warn = warnLine(f);
+  const status = lookup ? statusLine(f) : "";
+  const seen = seenBy(f.id).size > 0;
+  return `<article class="ticket">
       <div class="body">
         <h3>${esc(f.t)}</h3>
         <p class="meta">${f.y}${f.ir ? `, IMDb ${f.ir.toFixed(1)}` : f.tr ? `, TMDB ${Number(f.tr).toFixed(1)}` : ""}</p>
         ${whereLine(f) ? `<p class="where">${esc(whereLine(f))}</p>` : ""}
+        ${status ? `<p class="status">${esc(status)}</p>` : ""}
         <p class="why">${esc(why || moodLine(f))}</p>
         ${warn ? `<p class="warn">${esc(warn)}</p>` : ""}
+        ${f.o ? (lookup ? `<p class="about">${esc(f.o)}</p>` : `<details class="about"><summary>What's it about?</summary><p>${esc(f.o)}</p></details>`) : ""}
         <div class="actions">
           <a class="btn" href="${imdbUrl(f)}" target="_blank" rel="noopener">IMDb</a>
           <a class="btn" href="${whereUrl(f)}" target="_blank" rel="noopener">Where to watch</a>
-          <button class="btn" type="button" data-seen="${f.id}">We've seen it</button>
-          <button class="btn" type="button" data-skip="${f.id}">Not tonight</button>
+          ${seen && lookup ? "" : `<button class="btn" type="button" data-seen="${f.id}">We've seen it</button>`}
+          ${lookup ? `<button class="btn" type="button" data-likethis="${f.id}">Find similar</button>`
+                   : `<button class="btn" type="button" data-skip="${f.id}">Not tonight</button>`}
         </div>
       </div>
-      <div class="stub" aria-label="Certificate ${f.c}, ${f.r} minutes">
+      <div class="stub" aria-label="Certificate ${f.c}${f.r ? `, ${f.r} minutes` : ""}">
         <span class="cert">${esc(f.c)}</span>${f.r ? `<span class="mins">${f.r} min</span>` : ""}
       </div>
     </article>`;
-  }).join("");
-  const ls = Object.keys(localSeen).length;
-  $("local-count").textContent = ls ? `${ls} ${ls === 1 ? "film" : "films"} marked as seen on this phone. They stay hidden until you clear them.` : "Films you mark as seen are saved on this phone and stay hidden.";
+}
+
+function renderLookup() {
+  const q = norm($("lookup").value || "");
+  const out = $("lookup-results");
+  if (!q) { out.innerHTML = ""; return; }
+  const hits = DATA.films.filter((f) => norm(f.t).includes(q))
+    .sort((a, b) => (norm(b.t).startsWith(q) - norm(a.t).startsWith(q)) || (rating(b) - rating(a)))
+    .slice(0, 5);
+  const raw = $("lookup").value.trim();
+  if (!hits.length) {
+    out.innerHTML = `<div class="empty">
+      <p>That film isn't in the app. The app holds every well-known film on your services, so it probably isn't on any of them right now.</p>
+      <div class="actions" style="margin-top:10px">
+        <a class="btn" href="https://www.justwatch.com/uk/search?q=${encodeURIComponent(raw)}" target="_blank" rel="noopener">Check JustWatch</a>
+        <a class="btn" href="https://www.imdb.com/find/?q=${encodeURIComponent(raw)}&s=tt&ttype=ft" target="_blank" rel="noopener">Look it up on IMDb</a>
+      </div></div>`;
+    return;
+  }
+  out.innerHTML = `<div class="tickets">${hits.map((f) => ticketHTML(f, null, true)).join("")}</div>`;
 }
 
 function toast(msg, undo) {
@@ -241,20 +275,30 @@ function wire() {
   };
   $("shuffle").addEventListener("click", others);
   $("more").addEventListener("click", others);
-  $("results").addEventListener("click", (e) => {
-    const seen = e.target.closest("[data-seen]"), skip = e.target.closest("[data-skip]");
+  const ticketClick = (e) => {
+    const seen = e.target.closest("[data-seen]"), skip = e.target.closest("[data-skip]"), like = e.target.closest("[data-likethis]");
+    if (like) {
+      const f = byId.get(like.dataset.likethis);
+      state.like = f.id; state.page = 0; $("like").value = f.t; $("lookup").value = ""; renderLookup(); render();
+      $("like-h").scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
     if (seen) {
       const id = seen.dataset.seen;
       localSeen[id] = { who: [...state.who], date: new Date().toISOString().slice(0, 10) };
       store.set("seenLocal", localSeen); render();
-      toast(`Marked as seen by ${whoText()}`, () => { delete localSeen[id]; store.set("seenLocal", localSeen); render(); });
+      toast(`Marked as seen by ${whoText()}`, () => { delete localSeen[id]; store.set("seenLocal", localSeen); render(); renderLookup(); });
     } else if (skip) {
       const id = skip.dataset.skip;
       skipped[id] = Date.now() + SKIP_HOURS * 3600e3;
       store.set("skipped", skipped); render();
       toast("Hidden for tonight", () => { delete skipped[id]; store.set("skipped", skipped); render(); });
     }
-  });
+    renderLookup();
+  };
+  $("results").addEventListener("click", ticketClick);
+  $("lookup-results").addEventListener("click", ticketClick);
+  $("lookup").addEventListener("input", renderLookup);
 
   const input = $("like"), sug = $("suggest");
   const pick = (id) => {

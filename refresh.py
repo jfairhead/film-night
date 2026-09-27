@@ -4,7 +4,7 @@ For each film it adds:
   imdb  IMDb ID (from TMDB)            ir/iv  IMDb rating and vote count (IMDb datasets)
   p     your services in the UK as [name, "free" | "inc"]
   po    other UK subscription services      pr  where it can be rented or bought
-  c, r  BBFC certificate and runtime from TMDB when available
+  c, r  BBFC certificate and runtime from TMDB when available      o  short plot summary
 It also adds every well-known film currently on your services ("auto" films), with moods and tags
 worked out from TMDB genres and keywords. Their watch-outs are not hand-checked.
 Needs a TMDB key in the environment: TMDB_TOKEN (API Read Access Token) or TMDB_API_KEY.
@@ -98,6 +98,16 @@ def platforms(wp):
     return [[k, v] for k, v in order], other, stores
 
 
+def short(text, limit=260):
+    """Trim a plot summary to a phone-friendly length, ending on a full sentence where possible."""
+    text = " ".join((text or "").split())
+    if len(text) <= limit:
+        return text
+    cut = text[:limit]
+    end = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "))
+    return cut[:end + 1] if end > limit * 0.5 else cut.rsplit(" ", 1)[0] + "…"
+
+
 def slug(t, y):
     return re.sub(r"[^a-z0-9]+", "-", t.lower()).strip("-") + f"-{y}"
 
@@ -165,7 +175,7 @@ def auto_film(tid, info, cache):
         imdb = (d.get("external_ids") or {}).get("imdb_id")
         if imdb: base["imdb"] = imdb
     f = dict(base)
-    f.update({"p": p, "po": [], "pr": [], "tr": r.get("vote_average")})
+    f.update({"p": p, "po": [], "pr": [], "tr": r.get("vote_average"), "o": short(r.get("overview"))})
     return f
 
 
@@ -215,6 +225,7 @@ def main():
         cert = gb_cert(d.get("release_dates"))
         if cert: f["c"] = cert
         if d.get("runtime"): f["r"] = d["runtime"]
+        if d.get("overview"): f["o"] = short(d["overview"])
         films.append(f)
         time.sleep(0.05)
     # Auto films, reusing details from the last run so only new arrivals cost API calls
@@ -223,7 +234,7 @@ def main():
         try:
             for f in json.load(open(OUT)).get("films", []):
                 if f.get("auto") and f.get("tm"):
-                    cache[f["tm"]] = {k: v for k, v in f.items() if k not in ("p", "po", "pr", "tr", "ir", "iv")}
+                    cache[f["tm"]] = {k: v for k, v in f.items() if k not in ("p", "po", "pr", "tr", "ir", "iv", "o")}
         except ValueError:
             pass
     print("Finding films on your services...", flush=True)

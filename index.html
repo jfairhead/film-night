@@ -154,12 +154,19 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
 
   <footer>
     <p class="hint" id="local-count"></p>
+    <div class="row" id="share-row" hidden style="margin-top:0">
+      <input type="password" id="code" placeholder="Family passcode" autocomplete="off" inputmode="text"
+        style="flex:1;font:inherit;font-size:17px;color:var(--text);background:var(--raise);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-height:44px">
+      <button class="btn primary" id="save-code" type="button">Save</button>
+    </div>
+    <button class="btn" id="forget-code" type="button" hidden>Remove passcode from this phone</button>
     <button class="btn" id="copy" type="button">Copy watched list to send to Claude</button>
     <p class="hint" id="updated"></p>
     <p class="hint">Streaming data from JustWatch, via TMDB. This app uses the TMDB API but is not endorsed or certified by TMDB. Ratings from IMDb.</p>
   </footer>
 </main>
 <div class="toast" id="toast" role="status"></div>
+<script src="config.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

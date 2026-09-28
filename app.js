@@ -42,6 +42,34 @@ const state = {
   seed: Math.floor(Math.random() * 1e9)
 };
 let localSeen = store.get("seenLocal", {}); // id -> {who:[...], date:"YYYY-MM-DD"}
+// Shared "seen" list in the family Google Sheet (see config.js); a cached copy works offline
+const SHEET = (window.FILM_NIGHT_SHEET || "").trim();
+let sharedSeen = store.get("sharedSeen", []);
+let passcode = store.get("code", ""); // entered once per phone, never in the code
+function sheetPost(action, id, who, date) {
+  if (!SHEET || !passcode) return;
+  fetch(SHEET, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({ action, id, who, date, code: passcode }) }).catch(() => {});
+}
+async function checkCode(code) {
+  const r = await fetch(SHEET + "?check=" + encodeURIComponent(code), { cache: "no-store" });
+  return (await r.json()).ok === true;
+}
+async function syncShared() {
+  if (!SHEET) return;
+  try {
+    const r = await fetch(SHEET, { cache: "no-store" });
+    const data = await r.json();
+    sharedSeen = data.seen || [];
+    store.set("sharedSeen", sharedSeen);
+    // Send up anything marked on this phone that the sheet doesn't have yet
+    const onSheet = new Set(sharedSeen.map((x) => x.id));
+    if (passcode) for (const [id, v] of Object.entries(localSeen)) {
+      if (!onSheet.has(id)) { sheetPost("seen", id, v.who, v.date); sharedSeen.push({ id, who: v.who, date: v.date }); }
+    }
+    render(); renderLookup();
+  } catch { /* offline or sheet unavailable: keep the cached copy */ }
+}
 // "Not tonight": hidden on this phone for a few hours
 let skipped = Object.fromEntries(Object.entries(store.get("skipped", {})).filter(([, t]) => t > Date.now()));
 const rating = (f) => f.ir || f.tr || 0;
@@ -62,6 +90,7 @@ function seenBy(id) {
   const who = new Set();
   DATA.seen.filter((s) => s.id === id).forEach((s) => s.who.forEach((w) => who.add(w)));
   if (localSeen[id]) localSeen[id].who.forEach((w) => who.add(w));
+  sharedSeen.filter((s) => s.id === id).forEach((s) => s.who.forEach((w) => who.add(w)));
   return who;
 }
 function hiddenAsSeen(id) {
@@ -180,7 +209,12 @@ function render() {
   $("summary").textContent = `${list.length} ${list.length === 1 ? "film fits" : "films fit"} ${whoText()}. Showing ${page * PER_PAGE + 1} to ${page * PER_PAGE + shown.length}.`;
   res.innerHTML = shown.map(({ f, why }) => ticketHTML(f, why)).join("");
   const ls = Object.keys(localSeen).length;
-  $("local-count").textContent = ls ? `${ls} ${ls === 1 ? "film" : "films"} marked as seen on this phone. They stay hidden until you clear them.` : "Films you mark as seen are saved on this phone and stay hidden.";
+  $("share-row").hidden = !SHEET || !!passcode;
+  $("forget-code").hidden = !SHEET || !passcode;
+  $("local-count").textContent = SHEET
+    ? (passcode ? "Films marked as seen are shared with everyone's phones."
+                : "Enter the family passcode to share films marked as seen with everyone's phones. Until then they're saved on this phone.")
+    : (ls ? `${ls} ${ls === 1 ? "film" : "films"} marked as seen on this phone. They stay hidden until you clear them.` : "Films you mark as seen are saved on this phone and stay hidden.");
 }
 
 function statusLine(f) {
@@ -264,6 +298,16 @@ function wire() {
     const b = e.target.closest("[data-rating]"); if (!b) return;
     state.minRating = Number(b.dataset.rating); store.set("minRating", state.minRating); state.page = 0; render();
   });
+  $("save-code").addEventListener("click", async () => {
+    const code = $("code").value.trim(); if (!code) return;
+    $("save-code").disabled = true;
+    try {
+      if (await checkCode(code)) { passcode = code; store.set("code", code); $("code").value = ""; toast("Passcode accepted"); syncShared(); render(); }
+      else toast("That passcode isn't right");
+    } catch { toast("Couldn't check it. Are you online?"); }
+    $("save-code").disabled = false;
+  });
+  $("forget-code").addEventListener("click", () => { passcode = ""; store.set("code", ""); render(); toast("Passcode removed from this phone"); });
   $("unskip").addEventListener("click", () => { skipped = {}; store.set("skipped", skipped); render(); toast("Showing them again"); });
   $("ours").addEventListener("change", (e) => { state.ours = e.target.checked; store.set("ours", state.ours); state.page = 0; render(); });
   $("gentle").addEventListener("change", (e) => { state.gentle = e.target.checked; state.page = 0; render(); });
@@ -285,9 +329,16 @@ function wire() {
     }
     if (seen) {
       const id = seen.dataset.seen;
-      localSeen[id] = { who: [...state.who], date: new Date().toISOString().slice(0, 10) };
-      store.set("seenLocal", localSeen); render();
-      toast(`Marked as seen by ${whoText()}`, () => { delete localSeen[id]; store.set("seenLocal", localSeen); render(); renderLookup(); });
+      const mark = { who: [...state.who], date: new Date().toISOString().slice(0, 10) };
+      localSeen[id] = mark;
+      sharedSeen = sharedSeen.filter((x) => x.id !== id).concat([{ id, ...mark }]);
+      store.set("seenLocal", localSeen); store.set("sharedSeen", sharedSeen);
+      sheetPost("seen", id, mark.who, mark.date); render();
+      toast(`Marked as seen by ${whoText()}`, () => {
+        delete localSeen[id]; sharedSeen = sharedSeen.filter((x) => x.id !== id);
+        store.set("seenLocal", localSeen); store.set("sharedSeen", sharedSeen);
+        sheetPost("unseen", id); render(); renderLookup();
+      });
     } else if (skip) {
       const id = skip.dataset.skip;
       skipped[id] = Date.now() + SKIP_HOURS * 3600e3;
@@ -349,6 +400,7 @@ async function start() {
   $("updated").textContent = `${DATA.films.length - autoN} hand-picked films${autoN ? ` and ${autoN} more from your services` : ""}. `;
   $("updated").textContent += `Film list updated ${new Date(DATA.updated).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}. ${DATA.checked ? `Streaming checked ${new Date(DATA.checked).toLocaleDateString("en-GB", { day: "numeric", month: "long" })}.` : ""} Certificates are a guide.`;
   render();
+  syncShared();
 }
 start();
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});

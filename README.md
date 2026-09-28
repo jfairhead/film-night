@@ -33,6 +33,15 @@ If the log lists films "Not found on TMDB", add their TMDB number to `tmdb-ids.j
 - Gentle mode comes on whenever Kid 2 is selected and goes off otherwise; you can still flip it by hand.
 - Each ticket says whether a film is free (BBC iPlayer, ITVX, Channel 4, My5), included with a subscription (Netflix, Prime Video, Disney+), or only to rent or buy.
 
+## Shared "seen" list (optional)
+1. Create a Google Sheet (any name), then Extensions, then Apps Script. Replace the code with `google-apps-script.js` and save.
+2. Deploy, then New deployment, type Web app. Execute as: Me. Who has access: Anyone. Authorise when asked, then copy the URL ending `/exec`.
+3. Set the family passcode: in Apps Script, Project Settings (cog), then Script properties, then Add script property. Name `PASSCODE`, value your code.
+4. Paste the `/exec` URL into `config.js` and commit.
+5. On each phone, enter the passcode once at the bottom of the app. Without it, "seen" marks stay on that phone and upload later once the passcode is entered.
+Every phone then shares "We've seen it" marks, and the nightly refresh copies the sheet into `films.json` as a backup. The sheet only holds film IDs, Mum/Dad/Kid 1/Kid 2 and dates. Anyone with the link can read the list, but only someone with the passcode can change it. The passcode lives in the script's settings and on each phone, never in the public code.
+If you change the script later, use Deploy, then Manage deployments, then edit the existing deployment, so the URL stays the same.
+
 ## Credits and privacy
 Streaming data from JustWatch via TMDB. This app uses the TMDB API but is not endorsed or certified by TMDB. IMDb ratings from IMDb's non-commercial datasets.
 

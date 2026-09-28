@@ -189,6 +189,20 @@ def gb_cert(rd):
     return None
 
 
+def sheet_seen():
+    """Copy the family Google Sheet's "seen" list (URL in config.js) into films.json as a backup."""
+    try:
+        m = re.search(r'FILM_NIGHT_SHEET\s*=\s*"([^"]+)"', open(os.path.join(ROOT, "config.js")).read())
+        if not m:
+            return []
+        with urllib.request.urlopen(m.group(1), timeout=60) as r:
+            rows = json.load(r).get("seen") or []
+        return [{"id": x["id"], "who": x["who"]} for x in rows if x.get("id") and x.get("who")]
+    except Exception as e:  # the refresh should never fail because of the sheet
+        print("Couldn't read the shared seen sheet:", e)
+        return []
+
+
 def load_ratings(wanted):
     print("Downloading IMDb ratings...", flush=True)
     with urllib.request.urlopen(RATINGS_URL, timeout=120) as r:
@@ -251,7 +265,12 @@ def main():
     for f in films:
         if f.get("imdb") in ratings:
             f["ir"], f["iv"] = ratings[f["imdb"]]
-    out = {"updated": cat["updated"], "checked": datetime.date.today().isoformat(), "films": films, "seen": cat["seen"]}
+    seen = list(cat["seen"])
+    have = {(s["id"], tuple(s["who"])) for s in seen}
+    for s in sheet_seen():
+        if (s["id"], tuple(s["who"])) not in have:
+            seen.append(s)
+    out = {"updated": cat["updated"], "checked": datetime.date.today().isoformat(), "films": films, "seen": seen}
     json.dump(out, open(OUT, "w"), ensure_ascii=False, separators=(",", ":"))
     json.dump(dict(sorted(ids.items())), open(IDS, "w"), indent=1)
     on = sum(1 for f in films if f.get("p"))

@@ -1,5 +1,5 @@
 // Film night service worker: app shell works offline; the film list always tries the network first.
-const CACHE = "film-night-v8";
+const CACHE = "film-night-v9";
 const SHELL = ["./", "index.html", "app.js", "config.js", "manifest.json", "icon-192.png", "icon-512.png", "films.json"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", (e) => {

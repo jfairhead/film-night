@@ -46,10 +46,15 @@ let localSeen = store.get("seenLocal", {}); // id -> {who:[...], date:"YYYY-MM-D
 const SHEET = (window.FILM_NIGHT_SHEET || "").trim();
 let sharedSeen = store.get("sharedSeen", []);
 let passcode = store.get("code", ""); // entered once per phone, never in the code
-function sheetPost(action, id, who, date) {
+// Watchlists and ratings: [{id, who, date}] and [{id, who, v: "great"|"ok"|"meh", date}]
+let watch = store.get("watch", []);
+let rates = store.get("rates", []);
+const today = () => new Date().toISOString().slice(0, 10);
+function saveLists() { store.set("watch", watch); store.set("rates", rates); store.set("sharedSeen", sharedSeen); store.set("seenLocal", localSeen); }
+function sheetPost(body) {
   if (!SHEET || !passcode) return;
   fetch(SHEET, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify({ action, id, who, date, code: passcode }) }).catch(() => {});
+    body: JSON.stringify({ ...body, code: passcode }) }).catch(() => {});
 }
 async function checkCode(code) {
   const r = await fetch(SHEET + "?check=" + encodeURIComponent(code), { cache: "no-store" });
@@ -61,14 +66,82 @@ async function syncShared() {
     const r = await fetch(SHEET, { cache: "no-store" });
     const data = await r.json();
     sharedSeen = data.seen || [];
-    store.set("sharedSeen", sharedSeen);
-    // Send up anything marked on this phone that the sheet doesn't have yet
     const onSheet = new Set(sharedSeen.map((x) => x.id));
     if (passcode) for (const [id, v] of Object.entries(localSeen)) {
-      if (!onSheet.has(id)) { sheetPost("seen", id, v.who, v.date); sharedSeen.push({ id, who: v.who, date: v.date }); }
+      if (!onSheet.has(id)) { sheetPost({ action: "seen", id, who: v.who, date: v.date }); sharedSeen.push({ id, who: v.who, date: v.date }); }
     }
-    render(); renderLookup();
+    // Watchlists and ratings: the sheet is the master copy; anything only on this phone is sent up
+    if (Array.isArray(data.watch)) {
+      const key = (x) => x.id + "|" + x.who;
+      const sw = new Set(data.watch.map(key));
+      const extra = passcode ? watch.filter((x) => !sw.has(key(x))) : [];
+      extra.forEach((x) => sheetPost({ action: "watch", id: x.id, who: x.who, date: x.date }));
+      watch = data.watch.concat(extra);
+      const sr = new Set((data.ratings || []).map(key));
+      const extraR = passcode ? rates.filter((x) => !sr.has(key(x))) : [];
+      extraR.forEach((x) => sheetPost({ action: "rate", id: x.id, who: x.who, v: x.v, date: x.date }));
+      rates = (data.ratings || []).concat(extraR);
+    }
+    saveLists(); renderAll();
   } catch { /* offline or sheet unavailable: keep the cached copy */ }
+}
+const watchersOf = (id) => watch.filter((x) => x.id === id).map((x) => x.who);
+function toggleWatch(id, who) {
+  if (watch.some((x) => x.id === id && x.who === who)) {
+    watch = watch.filter((x) => !(x.id === id && x.who === who)); sheetPost({ action: "unwatch", id, who });
+  } else {
+    watch.push({ id, who, date: today() }); sheetPost({ action: "watch", id, who, date: today() });
+  }
+  saveLists();
+}
+const rateOf = (id, who) => (rates.find((x) => x.id === id && x.who === who) || {}).v || "";
+function setRate(id, who, v) {
+  const same = rateOf(id, who) === v;
+  rates = rates.filter((x) => !(x.id === id && x.who === who));
+  if (!same) rates.push({ id, who, v, date: today() });
+  sheetPost({ action: "rate", id, who, v: same ? "" : v, date: today() });
+  saveLists();
+}
+function markSeen(id, who) {
+  const mark = { who: [...who], date: today() };
+  localSeen[id] = mark;
+  sharedSeen = sharedSeen.filter((x) => x.id !== id).concat([{ id, ...mark }]);
+  sheetPost({ action: "seen", id, who: mark.who, date: mark.date });
+  // Once someone has seen it, it comes off their watchlist
+  for (const w of mark.who) if (watch.some((x) => x.id === id && x.who === w)) toggleWatch(id, w);
+  saveLists();
+}
+function unmarkSeen(id) {
+  delete localSeen[id]; sharedSeen = sharedSeen.filter((x) => x.id !== id);
+  sheetPost({ action: "unseen", id }); saveLists();
+}
+
+// Taste: learned from Great / OK / Meh ratings
+const RATE_WEIGHT = { great: 2, ok: 0.3, meh: -1.5 };
+const RATE_LABEL = { great: "Great", ok: "OK", meh: "Meh" };
+const tokens = (f) => f.m.map((m) => "m:" + m).concat(f.g.slice(0, 12).map((t) => "g:" + stem(t)));
+let taste = {};
+function buildTaste() {
+  taste = {};
+  for (const r of rates) {
+    const f = byId.get(r.id); if (!f) continue;
+    const p = taste[r.who] || (taste[r.who] = { n: 0, t: {} });
+    p.n++;
+    for (const k of tokens(f)) p.t[k] = (p.t[k] || 0) + RATE_WEIGHT[r.v];
+  }
+}
+function tasteFor(f, who) {
+  const p = taste[who]; if (!p || p.n < 3) return 0;
+  const ks = tokens(f);
+  return ks.reduce((a, k) => a + (p.t[k] || 0), 0) / Math.sqrt(ks.length || 1);
+}
+function tasteSummary(who) {
+  const p = taste[who];
+  if (!p || p.n < 3) return `Rate ${3 - (p ? p.n : 0)} more ${p && p.n === 2 ? "film" : "films"} to start learning ${who}'s taste.`;
+  const moods = Object.entries(p.t).filter(([k]) => k.startsWith("m:")).map(([k, v]) => [(MOODS.find((x) => x[0] === k.slice(2)) || [0, k.slice(2)])[1], v]);
+  const likes = moods.filter(([, v]) => v > 0.5).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([l]) => l);
+  const not = moods.filter(([, v]) => v < -0.5).sort((a, b) => a[1] - b[1]).slice(0, 2).map(([l]) => l);
+  return `${who} (${p.n} rated): ${likes.length ? "enjoys " + likes.join(", ") : "no clear favourites yet"}${not.length ? ". Less keen on " + not.join(", ") : ""}.`;
 }
 // "Not tonight": hidden on this phone for a few hours
 let skipped = Object.fromEntries(Object.entries(store.get("skipped", {})).filter(([, t]) => t > Date.now()));
@@ -131,12 +204,23 @@ function ranked() {
       if (s.tags.length) why = `Like ${liked.t}: ${s.tags.slice(0, 3).map((t) => t.replace(/-/g, " ")).join(", ")}`;
       else if (score) why = `Same kind of mood as ${liked.t}`;
     }
-    return { f, score, why, key: score + (rating(f) || 6.5) * 0.25 + (f.auto ? 0 : 0.6) + (kidsIn() ? 0 : AUDIENCE_WEIGHT[f.a] || 0) + rand(state.seed, f.id) * 1.2 };
+    const listed = watchersOf(f.id).filter((w) => state.who.has(w));
+    const fits = [...state.who].map((w) => [w, tasteFor(f, w)]);
+    const t = fits.length ? fits.reduce((a, [, v]) => a + v, 0) / fits.length : 0;
+    if (!why && listed.length) why = `On ${possessive(listed)} watchlist`;
+    const suits = fits.filter(([, v]) => v > 1.2).map(([w]) => w);
+    if (!why && suits.length) why = `Suits ${possessive(suits)} taste`;
+    return { f, score, why, key: score + (rating(f) || 6.5) * 0.25 + (f.auto ? 0 : 0.6) + (kidsIn() ? 0 : AUDIENCE_WEIGHT[f.a] || 0)
+      + (listed.length ? 2.5 : 0) + Math.max(-3, Math.min(3, t)) * 0.7 + rand(state.seed, f.id) * 1.2 };
   }).filter((x) => !liked || x.score > 0);
   scored.sort((a, b) => b.key - a.key);
   return scored;
 }
 
+function possessive(names) {
+  const p = names.map((n) => n + "'s");
+  return p.length > 1 ? p.slice(0, -1).join(", ") + " and " + p[p.length - 1] : p[0];
+}
 function moodLine(f) {
   return f.m.map((m) => (MOODS.find((x) => x[0] === m) || [m, m])[1]).join(", ");
 }
@@ -169,8 +253,24 @@ function whoText() {
   return w.length > 1 ? w.slice(0, -1).join(", ") + " and " + w[w.length - 1] : w[0];
 }
 
+// ---------- Views ----------
+const VIEWS = [["pick", "Pick"], ["watch", "Watchlists"], ["rated", "Ratings"]];
+state.view = store.get("view", "pick");
+state.watchWho = store.get("watchWho", "all");
+state.ratedWho = store.get("ratedWho", "all");
+
+function renderAll() {
+  buildTaste();
+  $("nav").innerHTML = VIEWS.map(([k, l]) =>
+    `<button type="button" data-view="${k}" aria-pressed="${state.view === k}">${l}</button>`).join("");
+  for (const [k] of VIEWS) $("view-" + k).hidden = state.view !== k;
+  if (state.view === "pick") { render(); renderLookup(); }
+  if (state.view === "watch") renderWatch();
+  if (state.view === "rated") renderRated();
+  renderFooter();
+}
+
 function render() {
-  // who chips
   $("who").innerHTML = VIEWERS.map((v) =>
     `<button class="chip" type="button" data-who="${v}" aria-pressed="${state.who.has(v)}">${v}</button>`).join("");
   $("moods").innerHTML = MOODS.map(([k, l]) =>
@@ -187,8 +287,11 @@ function render() {
     : "Showing everything, including intense films.";
 
   const res = $("results");
+  const n = Object.keys(skipped).length;
+  $("skipped-row").hidden = !n;
+  $("skipped-count").textContent = `${n} ${n === 1 ? "film" : "films"} hidden for tonight.`;
   if (!state.who.size) {
-    $("summary").textContent = "";
+    $("summary").textContent = ""; $("shuffle").hidden = $("more").hidden = true;
     res.innerHTML = `<div class="empty">Choose who's watching to see picks.</div>`;
     return;
   }
@@ -196,53 +299,59 @@ function render() {
   const pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
   const page = state.page % pages;
   const shown = list.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
-  const more = list.length > PER_PAGE;
-  $("shuffle").hidden = !more; $("more").hidden = !more;
-  const n = Object.keys(skipped).length;
-  $("skipped-row").hidden = !n;
-  $("skipped-count").textContent = `${n} ${n === 1 ? "film" : "films"} hidden for tonight.`;
+  $("shuffle").hidden = $("more").hidden = list.length <= PER_PAGE;
   if (!shown.length) {
     $("summary").textContent = "";
     res.innerHTML = `<div class="empty">Nothing fits all of that. Try fewer moods, a wider date or rating, or turn off Gentle mode.</div>`;
     return;
   }
   $("summary").textContent = `${list.length} ${list.length === 1 ? "film fits" : "films fit"} ${whoText()}. Showing ${page * PER_PAGE + 1} to ${page * PER_PAGE + shown.length}.`;
-  res.innerHTML = shown.map(({ f, why }) => ticketHTML(f, why)).join("");
-  const ls = Object.keys(localSeen).length;
-  $("share-row").hidden = !SHEET || !!passcode;
-  $("forget-code").hidden = !SHEET || !passcode;
-  $("local-count").textContent = SHEET
-    ? (passcode ? "Films marked as seen are shared with everyone's phones."
-                : "Enter the family passcode to share films marked as seen with everyone's phones. Until then they're saved on this phone.")
-    : (ls ? `${ls} ${ls === 1 ? "film" : "films"} marked as seen on this phone. They stay hidden until you clear them.` : "Films you mark as seen are saved on this phone and stay hidden.");
+  res.innerHTML = shown.map(({ f, why }) => ticketHTML(f, why, "pick")).join("");
 }
 
 function statusLine(f) {
   const who = [...seenBy(f.id)];
-  if (who.includes("Family")) return "You've all seen this";
-  if (who.length) return "Seen by " + who.join(", ");
-  if (skipped[f.id]) return "Hidden for tonight";
-  return "";
+  const parts = [];
+  if (who.includes("Family")) parts.push("You've all seen this");
+  else if (who.length) parts.push("Seen by " + who.join(", "));
+  const r = VIEWERS.map((w) => [w, rateOf(f.id, w)]).filter(([, v]) => v).map(([w, v]) => `${w}: ${RATE_LABEL[v]}`);
+  if (r.length) parts.push(r.join(", "));
+  if (skipped[f.id]) parts.push("Hidden for tonight");
+  return parts.join(". ");
 }
-function ticketHTML(f, why, lookup) {
+function aboutHTML(f) {
+  if (!f.o) return "";
+  const m = f.o.match(/^.*?[.!?](?=\s|$)/);
+  const first = m ? m[0] : f.o;
+  const rest = f.o.slice(first.length).trim();
+  return rest
+    ? `<details class="about"><summary>${esc(first)} <span class="more">More</span></summary><p>${esc(rest)}</p></details>`
+    : `<p class="about">${esc(first)}</p>`;
+}
+function ticketHTML(f, why, mode) {
   const warn = warnLine(f);
-  const status = lookup ? statusLine(f) : "";
+  const status = mode !== "pick" ? statusLine(f) : "";
   const seen = seenBy(f.id).size > 0;
+  const lists = watchersOf(f.id);
+  const where = whereLine(f);
   return `<article class="ticket">
       <div class="body">
         <h3>${esc(f.t)}</h3>
-        <p class="meta">${f.y}${f.ir ? `, IMDb ${f.ir.toFixed(1)}` : f.tr ? `, TMDB ${Number(f.tr).toFixed(1)}` : ""}</p>
-        ${whereLine(f) ? `<p class="where">${esc(whereLine(f))}</p>` : ""}
+        <p class="meta">${f.y}${f.ir ? ` · IMDb ${f.ir.toFixed(1)}` : f.tr ? ` · TMDB ${Number(f.tr).toFixed(1)}` : ""}</p>
+        ${where ? `<p class="where">${esc(where)}</p>` : ""}
+        ${aboutHTML(f)}
         ${status ? `<p class="status">${esc(status)}</p>` : ""}
+        ${lists.length ? `<p class="status">On ${esc(possessive(lists))} watchlist</p>` : ""}
         <p class="why">${esc(why || moodLine(f))}</p>
         ${warn ? `<p class="warn">${esc(warn)}</p>` : ""}
-        ${f.o ? (lookup ? `<p class="about">${esc(f.o)}</p>` : `<details class="about"><summary>What's it about?</summary><p>${esc(f.o)}</p></details>`) : ""}
         <div class="actions">
           <a class="btn" href="${imdbUrl(f)}" target="_blank" rel="noopener">IMDb</a>
           <a class="btn" href="${whereUrl(f)}" target="_blank" rel="noopener">Where to watch</a>
-          ${seen && lookup ? "" : `<button class="btn" type="button" data-seen="${f.id}">We've seen it</button>`}
-          ${lookup ? `<button class="btn" type="button" data-likethis="${f.id}">Find similar</button>`
-                   : `<button class="btn" type="button" data-skip="${f.id}">Not tonight</button>`}
+          <button class="btn ${lists.length ? "done" : ""}" type="button" data-watch="${f.id}">${lists.length ? "★ Watchlist" : "+ Watchlist"}</button>
+          ${seen && mode !== "pick" ? `<button class="btn" type="button" data-rateopen="${f.id}">Rate it</button>`
+                                    : `<button class="btn" type="button" data-seen="${f.id}">We've seen it</button>`}
+          ${mode === "pick" ? `<button class="btn" type="button" data-skip="${f.id}">Not tonight</button>` : ""}
+          ${mode === "lookup" ? `<button class="btn" type="button" data-likethis="${f.id}">Find similar</button>` : ""}
         </div>
       </div>
       <div class="stub" aria-label="Certificate ${f.c}${f.r ? `, ${f.r} minutes` : ""}">
@@ -268,7 +377,88 @@ function renderLookup() {
       </div></div>`;
     return;
   }
-  out.innerHTML = `<div class="tickets">${hits.map((f) => ticketHTML(f, null, true)).join("")}</div>`;
+  out.innerHTML = `<div class="tickets">${hits.map((f) => ticketHTML(f, null, "lookup")).join("")}</div>`;
+}
+
+const personChips = (attr, current) => [["all", "Everyone"], ...VIEWERS.map((v) => [v, v])].map(([k, l]) =>
+  `<button class="chip" type="button" data-${attr}="${k}" aria-pressed="${current === k}">${l}</button>`).join("");
+
+function renderWatch() {
+  $("watch-who").innerHTML = personChips("wfilter", state.watchWho);
+  const ids = [...new Set(watch.filter((x) => state.watchWho === "all" || x.who === state.watchWho)
+    .sort((a, b) => (b.date || "").localeCompare(a.date || "")).map((x) => x.id))].filter((id) => byId.has(id));
+  $("watch-results").innerHTML = ids.length
+    ? `<p class="hint" style="margin-bottom:12px">${ids.length} ${ids.length === 1 ? "film" : "films"}${state.watchWho === "all" ? " across everyone's watchlists" : ` on ${state.watchWho}'s watchlist`}.</p>
+       <div class="tickets">${ids.map((id) => ticketHTML(byId.get(id), null, "watch")).join("")}</div>`
+    : `<div class="empty">${state.watchWho === "all" ? "Nobody's" : state.watchWho + "'s"} watchlist is empty. Tap <strong>+ Watchlist</strong> on any film to add it.</div>`;
+}
+
+function seenFilms() {
+  const map = new Map();
+  const add = (id, who, date) => {
+    const e = map.get(id) || { id, who: new Set(), date: "" };
+    who.forEach((w) => e.who.add(w)); if (date && date > e.date) e.date = date; map.set(id, e);
+  };
+  DATA.seen.forEach((s) => add(s.id, s.who, ""));
+  sharedSeen.forEach((s) => add(s.id, s.who, s.date));
+  Object.entries(localSeen).forEach(([id, s]) => add(id, s.who, s.date));
+  rates.forEach((r) => add(r.id, [r.who], r.date));
+  return [...map.values()].filter((e) => byId.has(e.id));
+}
+function renderRated() {
+  $("rated-who").innerHTML = personChips("rfilter", state.ratedWho);
+  const people = state.ratedWho === "all" ? VIEWERS : [state.ratedWho];
+  $("taste").innerHTML = people.map((w) => `<p>${esc(tasteSummary(w))}</p>`).join("");
+  const list = seenFilms()
+    .filter((e) => state.ratedWho === "all" || e.who.has(state.ratedWho) || e.who.has("Family"))
+    .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  $("rated-results").innerHTML = list.length ? list.map((e) => {
+    const f = byId.get(e.id);
+    const raters = e.who.has("Family") ? VIEWERS : VIEWERS.filter((w) => e.who.has(w));
+    const shownRaters = state.ratedWho === "all" ? raters : raters.filter((w) => w === state.ratedWho);
+    return `<article class="rated-row">
+      <h3>${esc(f.t)} <span class="yr">${f.y}</span></h3>
+      <p class="hint">${e.who.has("Family") ? "Seen by everyone" : "Seen by " + [...e.who].join(", ")}${e.date ? ` on ${new Date(e.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" })}` : ""}</p>
+      ${shownRaters.map((w) => `<div class="rate-line"><span>${w}</span>${["great", "ok", "meh"].map((v) =>
+        `<button class="chip small" type="button" data-rate="${f.id}|${w}|${v}" aria-pressed="${rateOf(f.id, w) === v}">${RATE_LABEL[v]}</button>`).join("")}</div>`).join("")}
+    </article>`;
+  }).join("") : `<div class="empty">Nothing marked as seen yet.</div>`;
+}
+
+function renderFooter() {
+  const ls = Object.keys(localSeen).length;
+  $("share-row").hidden = !SHEET || !!passcode;
+  $("forget-code").hidden = !SHEET || !passcode;
+  $("local-count").textContent = SHEET
+    ? (passcode ? "Seen films, watchlists and ratings are shared with everyone's phones."
+                : "Enter the family passcode to share seen films, watchlists and ratings with everyone's phones. Until then they're saved on this phone.")
+    : (ls ? `${ls} ${ls === 1 ? "film" : "films"} marked as seen on this phone.` : "Seen films, watchlists and ratings are saved on this phone.");
+}
+
+// ---------- Pop-up panels ----------
+function openPanel(html) {
+  const d = $("panel");
+  $("panel-body").innerHTML = html;
+  if (!d.open) d.showModal();
+}
+function watchPanel(id) {
+  const f = byId.get(id);
+  openPanel(`<h2>Add to whose watchlist?</h2><p class="hint">${esc(f.t)} (${f.y})</p>
+    <div class="chips" style="margin:14px 0">${VIEWERS.map((w) =>
+      `<button class="chip" type="button" data-watchwho="${id}|${w}" aria-pressed="${watchersOf(id).includes(w)}">${w}</button>`).join("")}</div>
+    <button class="btn primary" type="button" data-close>Done</button>`);
+}
+function ratePanel(id, justSeen) {
+  const f = byId.get(id);
+  const who = [...seenBy(id)];
+  const raters = who.includes("Family") ? VIEWERS : VIEWERS.filter((w) => who.includes(w));
+  openPanel(`<h2>How was it?</h2><p class="hint">${esc(f.t)} (${f.y}). Ratings help the app learn who likes what.</p>
+    <div style="margin:14px 0;display:grid;gap:10px">${raters.map((w) => `<div class="rate-line"><span>${w}</span>${["great", "ok", "meh"].map((v) =>
+      `<button class="chip small" type="button" data-rate="${id}|${w}|${v}" aria-pressed="${rateOf(id, w) === v}">${RATE_LABEL[v]}</button>`).join("")}</div>`).join("")}</div>
+    <div class="row" style="margin-top:0">
+      ${justSeen ? `<button class="btn" type="button" data-unseen="${id}">Oops, not seen it</button>` : "<span></span>"}
+      <button class="btn primary" type="button" data-close>Done</button>
+    </div>`);
 }
 
 function toast(msg, undo) {
@@ -302,12 +492,12 @@ function wire() {
     const code = $("code").value.trim(); if (!code) return;
     $("save-code").disabled = true;
     try {
-      if (await checkCode(code)) { passcode = code; store.set("code", code); $("code").value = ""; toast("Passcode accepted"); syncShared(); render(); }
+      if (await checkCode(code)) { passcode = code; store.set("code", code); $("code").value = ""; toast("Passcode accepted"); syncShared(); renderAll(); }
       else toast("That passcode isn't right");
     } catch { toast("Couldn't check it. Are you online?"); }
     $("save-code").disabled = false;
   });
-  $("forget-code").addEventListener("click", () => { passcode = ""; store.set("code", ""); render(); toast("Passcode removed from this phone"); });
+  $("forget-code").addEventListener("click", () => { passcode = ""; store.set("code", ""); renderAll(); toast("Passcode removed from this phone"); });
   $("unskip").addEventListener("click", () => { skipped = {}; store.set("skipped", skipped); render(); toast("Showing them again"); });
   $("ours").addEventListener("change", (e) => { state.ours = e.target.checked; store.set("ours", state.ours); state.page = 0; render(); });
   $("gentle").addEventListener("change", (e) => { state.gentle = e.target.checked; state.page = 0; render(); });
@@ -319,37 +509,52 @@ function wire() {
   };
   $("shuffle").addEventListener("click", others);
   $("more").addEventListener("click", others);
-  const ticketClick = (e) => {
-    const seen = e.target.closest("[data-seen]"), skip = e.target.closest("[data-skip]"), like = e.target.closest("[data-likethis]");
-    if (like) {
-      const f = byId.get(like.dataset.likethis);
-      state.like = f.id; state.page = 0; $("like").value = f.t; $("lookup").value = ""; renderLookup(); render();
-      $("like-h").scrollIntoView({ behavior: "smooth", block: "start" });
+  $("lookup").addEventListener("input", renderLookup);
+  $("panel").addEventListener("close", () => renderAll());
+  $("panel").addEventListener("click", (e) => { if (e.target === $("panel")) $("panel").close(); });
+
+  // One handler for buttons on tickets, lists and panels
+  document.addEventListener("click", (e) => {
+    const t = (sel) => e.target.closest(sel);
+    let b;
+    if ((b = t("[data-view]"))) { state.view = b.dataset.view; store.set("view", state.view); renderAll(); window.scrollTo(0, 0); return; }
+    if ((b = t("[data-wfilter]"))) { state.watchWho = b.dataset.wfilter; store.set("watchWho", state.watchWho); renderWatch(); return; }
+    if ((b = t("[data-rfilter]"))) { state.ratedWho = b.dataset.rfilter; store.set("ratedWho", state.ratedWho); renderRated(); return; }
+    if ((b = t("[data-close]"))) { $("panel").close(); return; }
+    if ((b = t("[data-watch]"))) { watchPanel(b.dataset.watch); return; }
+    if ((b = t("[data-watchwho]"))) {
+      const [id, w] = b.dataset.watchwho.split("|"); toggleWatch(id, w);
+      b.setAttribute("aria-pressed", watchersOf(id).includes(w)); return;
+    }
+    if ((b = t("[data-rate]"))) {
+      const [id, w, v] = b.dataset.rate.split("|"); setRate(id, w, v);
+      b.parentElement.querySelectorAll("[data-rate]").forEach((x) => x.setAttribute("aria-pressed", rateOf(id, w) === x.dataset.rate.split("|")[2]));
+      buildTaste(); if (state.view === "rated" && !$("panel").open) $("taste").innerHTML = (state.ratedWho === "all" ? VIEWERS : [state.ratedWho]).map((x) => `<p>${esc(tasteSummary(x))}</p>`).join("");
       return;
     }
-    if (seen) {
-      const id = seen.dataset.seen;
-      const mark = { who: [...state.who], date: new Date().toISOString().slice(0, 10) };
-      localSeen[id] = mark;
-      sharedSeen = sharedSeen.filter((x) => x.id !== id).concat([{ id, ...mark }]);
-      store.set("seenLocal", localSeen); store.set("sharedSeen", sharedSeen);
-      sheetPost("seen", id, mark.who, mark.date); render();
-      toast(`Marked as seen by ${whoText()}`, () => {
-        delete localSeen[id]; sharedSeen = sharedSeen.filter((x) => x.id !== id);
-        store.set("seenLocal", localSeen); store.set("sharedSeen", sharedSeen);
-        sheetPost("unseen", id); render(); renderLookup();
-      });
-    } else if (skip) {
-      const id = skip.dataset.skip;
-      skipped[id] = Date.now() + SKIP_HOURS * 3600e3;
-      store.set("skipped", skipped); render();
-      toast("Hidden for tonight", () => { delete skipped[id]; store.set("skipped", skipped); render(); });
+    if ((b = t("[data-rateopen]"))) { ratePanel(b.dataset.rateopen, false); return; }
+    if ((b = t("[data-seen]"))) {
+      const id = b.dataset.seen;
+      if (!state.who.size) { toast("Choose who's watching first"); return; }
+      markSeen(id, state.who); ratePanel(id, true); return;
     }
-    renderLookup();
-  };
-  $("results").addEventListener("click", ticketClick);
-  $("lookup-results").addEventListener("click", ticketClick);
-  $("lookup").addEventListener("input", renderLookup);
+    if ((b = t("[data-unseen]"))) {
+      const id = b.dataset.unseen; unmarkSeen(id);
+      rates = rates.filter((x) => !(x.id === id && state.who.has(x.who))); saveLists();
+      $("panel").close(); toast("Unmarked"); return;
+    }
+    if ((b = t("[data-skip]"))) {
+      const id = b.dataset.skip;
+      skipped[id] = Date.now() + SKIP_HOURS * 3600e3; store.set("skipped", skipped); render();
+      toast("Hidden for tonight", () => { delete skipped[id]; store.set("skipped", skipped); render(); });
+      return;
+    }
+    if ((b = t("[data-likethis]"))) {
+      const f = byId.get(b.dataset.likethis);
+      state.like = f.id; state.page = 0; $("like").value = f.t; $("lookup").value = ""; renderLookup(); render();
+      $("like-h").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
 
   const input = $("like"), sug = $("suggest");
   const pick = (id) => {
@@ -362,7 +567,7 @@ function wire() {
     const hits = DATA.films.filter((f) => norm(f.t).includes(q)).slice(0, 6);
     sug.innerHTML = hits.map((f) => `<li><button type="button" data-pick="${f.id}">${esc(f.t)} (${f.y})</button></li>`).join("");
     sug.hidden = !hits.length;
-    $("like-hint").textContent = hits.length ? "" : "That film isn't in the list yet. Ask Claude to add it.";
+    $("like-hint").textContent = hits.length ? "" : "That film isn't in the app.";
   });
   input.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
@@ -371,11 +576,12 @@ function wire() {
   sug.addEventListener("click", (e) => { const b = e.target.closest("[data-pick]"); if (b) pick(b.dataset.pick); });
 
   $("copy").addEventListener("click", async () => {
-    const ids = Object.keys(localSeen);
-    if (!ids.length) { toast("Nothing marked as seen yet"); return; }
-    const text = "Film night: please add these to our watch log.\n" + ids.map((id) => {
-      const f = byId.get(id), s = localSeen[id];
-      return `- ${f ? `${f.t} (${f.y})` : id}: seen by ${s.who.join(", ")} on ${s.date}`;
+    const films = seenFilms().filter((e) => e.date);
+    if (!films.length) { toast("Nothing marked as seen yet"); return; }
+    const text = "Film night: please add these to our watch log.\n" + films.map((e) => {
+      const f = byId.get(e.id);
+      const r = VIEWERS.map((w) => [w, rateOf(e.id, w)]).filter(([, v]) => v).map(([w, v]) => `${w} ${RATE_LABEL[v]}`);
+      return `- ${f.t} (${f.y}): seen by ${[...e.who].join(", ")} on ${e.date}${r.length ? `. Ratings: ${r.join(", ")}` : ""}`;
     }).join("\n");
     try { await navigator.clipboard.writeText(text); toast("Copied. Paste it into Claude."); }
     catch { window.prompt("Copy this and paste it into Claude:", text); }
@@ -393,13 +599,12 @@ async function start() {
   }
   byId = new Map(DATA.films.map((f) => [f.id, f]));
   state.gentle = state.who.has("Kid 2");
-  // Drop local marks that the shared list now covers
   for (const s of DATA.seen) if (localSeen[s.id]) delete localSeen[s.id];
   store.set("seenLocal", localSeen);
   const autoN = DATA.films.filter((f) => f.auto).length;
   $("updated").textContent = `${DATA.films.length - autoN} hand-picked films${autoN ? ` and ${autoN} more from your services` : ""}. `;
   $("updated").textContent += `Film list updated ${new Date(DATA.updated).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}. ${DATA.checked ? `Streaming checked ${new Date(DATA.checked).toLocaleDateString("en-GB", { day: "numeric", month: "long" })}.` : ""} Certificates are a guide.`;
-  render();
+  renderAll();
   syncShared();
 }
 start();

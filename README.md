@@ -25,6 +25,8 @@ If the log lists films "Not found on TMDB", add their TMDB number to `tmdb-ids.j
 - To change which services count as yours, edit `OUR_SERVICES` near the top of `app.js`.
 
 ## How picks work
+- "+ Watchlist" adds a film to any of Mum, Dad, Kid 1 or Kid 2's watchlists; the Watchlists tab shows them, filtered by person. Films on a viewer's watchlist rise up their picks and come off the list once they've seen it.
+- After "We've seen it", each viewer can rate it Great, OK or Meh. After 3 ratings the app learns each person's taste and nudges picks towards it; the Ratings tab shows what it has learned.
 - "Look up a film" searches every film in the app by title and shows its plot summary, where it's streaming, and whether you've seen it. "Find similar" turns it into a "Something like…" search.
 - Moods can be combined (Funny and Feel good finds films that are both). "Narrow it down" filters by release date and minimum rating.
 - "We've seen it" hides a film on this phone for good (with Undo). "Not tonight" hides it on this phone for 12 hours. "Show me 5 others" pages through everything that fits without repeats.
@@ -39,7 +41,7 @@ If the log lists films "Not found on TMDB", add their TMDB number to `tmdb-ids.j
 3. Set the family passcode: in Apps Script, Project Settings (cog), then Script properties, then Add script property. Name `PASSCODE`, value your code.
 4. Paste the `/exec` URL into `config.js` and commit.
 5. On each phone, enter the passcode once at the bottom of the app. Without it, "seen" marks stay on that phone and upload later once the passcode is entered.
-Every phone then shares "We've seen it" marks, and the nightly refresh copies the sheet into `films.json` as a backup. The sheet only holds film IDs, Mum/Dad/Kid 1/Kid 2 and dates. Anyone with the link can read the list, but only someone with the passcode can change it. The passcode lives in the script's settings and on each phone, never in the public code.
+Every phone then shares seen films, watchlists and ratings, and the nightly refresh copies the sheet into `films.json` as a backup. The sheet only holds film IDs, Mum/Dad/Kid 1/Kid 2 and dates. Anyone with the link can read the list, but only someone with the passcode can change it. The passcode lives in the script's settings and on each phone, never in the public code.
 If you change the script later, use Deploy, then Manage deployments, then edit the existing deployment, so the URL stays the same.
 
 ## Credits and privacy

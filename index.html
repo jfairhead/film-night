@@ -62,28 +62,45 @@ input::placeholder{color:var(--muted)}
 
 /* The ticket: the one bold element */
 .tickets{display:grid;gap:16px}
-.ticket{display:grid;grid-template-columns:1fr 84px;background:var(--paper);color:var(--ink);border-radius:14px;
-  -webkit-mask:radial-gradient(circle 11px at calc(100% - 84px) 0,#0000 98%,#000) top/100% 51% no-repeat,
-               radial-gradient(circle 11px at calc(100% - 84px) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
-          mask:radial-gradient(circle 11px at calc(100% - 84px) 0,#0000 98%,#000) top/100% 51% no-repeat,
-               radial-gradient(circle 11px at calc(100% - 84px) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
-.ticket .body{padding:16px 16px 14px}
-.ticket h3{font-size:23px;line-height:1.15;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
-.ticket .meta{color:var(--inkMuted);font-size:15px;margin-bottom:8px}
-.ticket .why{font-size:15.5px}
-.ticket .where{font-size:15.5px;font-weight:700;margin-bottom:4px}
-.ticket .status{margin-top:2px;font-size:15px;font-weight:700;color:var(--inkMuted)}
-.ticket .about{margin-top:8px;font-size:15.5px}
-.ticket details.about summary{cursor:pointer;font-weight:700;color:var(--inkMuted);min-height:32px;display:flex;align-items:center}
+.ticket{display:grid;grid-template-columns:1fr 62px;background:var(--paper);color:var(--ink);border-radius:14px;
+  -webkit-mask:radial-gradient(circle 11px at calc(100% - 62px) 0,#0000 98%,#000) top/100% 51% no-repeat,
+               radial-gradient(circle 11px at calc(100% - 62px) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+          mask:radial-gradient(circle 11px at calc(100% - 62px) 0,#0000 98%,#000) top/100% 51% no-repeat,
+               radial-gradient(circle 11px at calc(100% - 62px) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.ticket .body{padding:13px 13px 12px}
+.ticket h3{font-size:20px;line-height:1.15;font-weight:800;margin:0 0 2px;letter-spacing:-.01em}
+.ticket .meta{color:var(--inkMuted);font-size:13.5px;margin-bottom:4px}
+.ticket .why{font-size:14px;color:var(--inkMuted);margin-top:4px}
+.ticket .where{font-size:14.5px;font-weight:700}
+.ticket .status{margin-top:4px;font-size:14px;font-weight:700;color:var(--inkMuted)}
+.ticket .about{margin-top:6px;font-size:15px;line-height:1.4}
+.ticket details.about summary{cursor:pointer;list-style:none}
+.ticket details.about summary::-webkit-details-marker{display:none}
+.ticket details.about .more{font-weight:700;color:var(--inkMuted);text-decoration:underline;white-space:nowrap}
+.ticket details.about[open] .more{display:none}
 .ticket details.about p{margin-top:4px}
-.ticket .warn{margin-top:8px;font-size:15px;color:#9B2231;font-weight:600}
+.ticket .warn{margin-top:4px;font-size:14px;color:#9B2231;font-weight:600}
 .ticket .seenby{margin-top:8px;font-size:15px;color:var(--inkMuted)}
-.ticket .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.ticket .actions .btn{background:transparent;color:var(--ink);border-color:#CFC4A3;font-size:15px;padding:8px 12px;min-height:40px}
+.ticket .actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ticket .actions .btn{background:transparent;color:var(--ink);border-color:#CFC4A3;font-size:14px;padding:6px 10px;min-height:38px;border-radius:10px}
 .ticket .actions .btn.done{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .stub{border-left:2px dashed #CFC4A3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 6px;text-align:center}
-.stub .cert{font-size:30px;font-weight:800;line-height:1}
-.stub .mins{font-size:14px;color:var(--inkMuted);font-weight:600}
+.stub .cert{font-size:20px;font-weight:800;line-height:1}
+.stub .mins{font-size:12px;color:var(--inkMuted);font-weight:600}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;gap:6px;background:var(--bg);padding:8px 0 10px;margin-bottom:14px}
+nav.tabs button{flex:1;font:inherit;font-size:15px;font-weight:700;color:var(--text);background:var(--raise);border:1.5px solid var(--line);border-radius:12px;padding:8px 6px;min-height:44px;cursor:pointer}
+nav.tabs button[aria-pressed="true"]{background:var(--pop);color:var(--popInk);border-color:var(--pop)}
+.chip.small{font-size:14px;padding:6px 12px;min-height:38px}
+.rate-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rate-line span{min-width:52px;font-weight:700}
+.rated-row{background:var(--raise);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:8px}
+.rated-row h3{font-size:18px;margin:0}
+.rated-row .yr{font-weight:600;color:var(--muted);font-size:15px}
+#rated-results{display:grid;gap:10px}
+#taste{display:grid;gap:6px;margin:12px 0 16px;background:var(--raise);border-radius:14px;padding:12px 14px;font-size:15px}
+dialog#panel{border:0;border-radius:18px;padding:20px;max-width:min(440px,calc(100vw - 32px));width:100%;background:var(--bg);color:var(--text)}
+dialog#panel::backdrop{background:rgba(10,12,30,.55)}
+dialog#panel h2{margin-bottom:4px}
 .empty{background:var(--raise);border:1.5px dashed var(--line);border-radius:14px;padding:18px}
 footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;display:grid;gap:10px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--pop);color:var(--popInk);
@@ -97,6 +114,9 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
 <body>
 <main>
   <h1>Film night</h1>
+  <nav class="tabs" id="nav" aria-label="Sections"></nav>
+
+  <div id="view-pick">
 
   <section aria-labelledby="lookup-h">
     <h2 id="lookup-h">Look up a film</h2>
@@ -152,6 +172,21 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
     </div>
   </section>
 
+  </div>
+
+  <div id="view-watch" hidden>
+    <h2>Watchlists</h2>
+    <div class="chips" id="watch-who" style="margin-bottom:14px"></div>
+    <div id="watch-results"></div>
+  </div>
+
+  <div id="view-rated" hidden>
+    <h2>Seen and rated</h2>
+    <div class="chips" id="rated-who"></div>
+    <div id="taste"></div>
+    <div id="rated-results"></div>
+  </div>
+
   <footer>
     <p class="hint" id="local-count"></p>
     <div class="row" id="share-row" hidden style="margin-top:0">
@@ -165,6 +200,7 @@ footer{border-top:1.5px solid var(--line);padding-top:18px;margin-top:30px;displ
     <p class="hint">Streaming data from JustWatch, via TMDB. This app uses the TMDB API but is not endorsed or certified by TMDB. Ratings from IMDb.</p>
   </footer>
 </main>
+<dialog id="panel"><div id="panel-body"></div></dialog>
 <div class="toast" id="toast" role="status"></div>
 <script src="config.js"></script>
 <script src="app.js"></script>

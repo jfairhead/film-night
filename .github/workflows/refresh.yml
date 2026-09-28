@@ -2,8 +2,8 @@ name: Refresh film data
 
 on:
   schedule:
-    - cron: "30 3 * * *"
-  workflow_dispatch:
+    - cron: "30 3 * * *"   # every night at 03:30 UTC
+  workflow_dispatch:        # "Run workflow" button on the Actions tab
   push:
     paths:
       - "catalogue.json"
@@ -19,8 +19,8 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Refresh films.json
@@ -33,4 +33,11 @@ jobs:
           git config user.name "film-night-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add films.json tmdb-ids.json
-          git diff --cached --quiet || (git commit -m "Refresh film data" && git push)
+          if git diff --cached --quiet; then echo "Nothing changed"; exit 0; fi
+          git commit -m "Refresh film data"
+          # Someone may have pushed while this ran: catch up first, keeping this run's fresh data
+          for attempt in 1 2 3; do
+            git pull --rebase -X theirs origin main && git push && exit 0
+            sleep 5
+          done
+          exit 1
